@@ -1,0 +1,62 @@
+<ion-header>
+	<ion-toolbar>
+		<!-- <ion-buttons slot="start">
+			<ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+		</ion-buttons> -->
+		<ion-title>{{'phone_verification' | translate}}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<div id="recaptcha-container"></div>
+	<div class="formVerify">
+		<p class="ion-text-center">{{'verification_text' | translate}} {{phoneNumberFull}} </p>
+
+		<ion-list lines="none">
+			<!-- <ion-item lines="none">
+				<ion-input class="ion-text-center" type="number" [(ngModel)]="otp"
+					placeholder="{{'enter_verification_code' | translate}}">
+				</ion-input>
+			</ion-item> -->
+			
+            <ion-item class="otpDiv">
+                <ion-input type="tel" class="otp-input" maxlength="1" (keyup)="moveFocus($event,inputotp2,'');" name="otp1" #inputotp1 [(ngModel)]="otp1"></ion-input>
+
+                <ion-input type="tel" class="otp-input" maxlength="1" (keyup)="moveFocus($event,inputotp3,inputotp1);" name="otp2" #inputotp2 [(ngModel)]="otp2"></ion-input>
+
+                <ion-input type="tel" class="otp-input" maxlength="1" (keyup)="moveFocus($event,inputotp4,inputotp2);" name="otp3" #inputotp3 [(ngModel)]="otp3"></ion-input>
+
+                <ion-input type="tel" class="otp-input" maxlength="1" (keyup)="moveFocus($event,inputotp5,inputotp3);" name="otp4" #inputotp4 [(ngModel)]="otp4"></ion-input>
+
+                <ion-input type="tel" class="otp-input" maxlength="1" (keyup)="moveFocus($event,inputotp6,inputotp4);" name="otp5" #inputotp5 [(ngModel)]="otp5"></ion-input>
+
+                <ion-input type="tel" class="otp-input" maxlength="1" (keyup)="moveFocus($event,'',inputotp5);" name="otp6" #inputotp6 [(ngModel)]="otp6"></ion-input>
+
+            </ion-item>
+
+			<ion-button size="large" shape="block" class="btn" (click)="verify()">
+				{{'verify' | translate}}
+			</ion-button>
+		</ion-list>
+
+		<!-- Resend otp button and timer  -->
+		<div class="resend-wrap-main" *ngIf="isOtpSent">
+			<div class="resend-otp-wrap">
+				<p text-center>{{'didnt-receive-code' | translate}}</p>
+			</div>
+			<div class="resend-timer-text">
+				<div class="resend" (click)="resendOtp(true)" *ngIf="countFlag">
+					<span>{{'resend-otp' |translate}}</span>
+				</div>
+
+				<div class="timer" *ngIf="!countFlag">
+					<span>{{'resend-otp-in' |translate}}</span> &nbsp;&nbsp;
+					<ion-icon name="time-outline" class="icon-time-slot"></ion-icon>
+					<span>0{{minutes}}:{{stringSeconds}}</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- <h4 class="d-flex">0:22 min left <span class="end">{{'resend' | translate}}</span></h4> -->
+	</div>
+</ion-content>

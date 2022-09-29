@@ -1,0 +1,63 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start"  mode="md">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Contact Us</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="form">
+       
+         <h1>Please share your feedback or queries here:</h1>
+       <!-- <h2>{{'let_us_know_queries_feedback' | translate}}</h2> -->
+        <ion-item>
+            <ion-select  [(ngModel)]="reportCategory" (ionChange)="setCategory($event)"  interface="popover" placeholder="Select a category">
+                <ion-select-option value="Unable to login">Unable to login</ion-select-option>
+                <!-- <ion-select-option value="2">Coupon related query</ion-select-option> -->
+                <ion-select-option value="Order delivery status">Order delivery status</ion-select-option>
+                <ion-select-option value="Cancel my order">Cancel my order </ion-select-option>
+                <ion-select-option value="Visit the farms">Visit the farms</ion-select-option>
+                <ion-select-option value="Adopt a farmer/village">Adopt a farmer/village</ion-select-option>
+                <ion-select-option value="Product related query">Product related query</ion-select-option>
+                <ion-select-option value="Want to join the team as volunteer/fulltime">Want to join the team as volunteer/fulltime</ion-select-option>
+                <!-- <ion-select-option value="10">Looking for a job opportunity</ion-select-option> -->
+                <ion-select-option value="Payment related query">Payment related query</ion-select-option>
+                <ion-select-option value="I am a farmer/seller">I am a farmer/seller</ion-select-option>
+                <!-- <ion-select-option value="15">I am a seller</ion-select-option> -->
+                <ion-select-option value="Others">Others</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+        <ion-list lines="none">
+            <!--
+			<ion-item lines="none">
+				<ion-label position="fixed">{{'full_name' | translate}}</ion-label>
+				<ion-input class="ion-text-end" disabled readonly [(ngModel)]="supportRequest.name"></ion-input>
+			</ion-item>
+-->
+            <ion-item lines="none">
+                <div class="ite_inner  d-flex">
+                    <ion-icon class="zmdi zmdi-email ion-text-start"></ion-icon>
+                    <!--                    <ion-label position="fixed">{{'email_address' | translate}}</ion-label>-->
+                    <ion-input  [(ngModel)]="supportRequest.email" placeholder="email_address"></ion-input>
+                </div>
+            </ion-item>
+
+            
+            <ion-item lines="none">
+                <div class="ite_inner d-flex">
+                    <ion-icon class="zmdi zmdi-edit ion-text-start"></ion-icon>
+                    <ion-textarea type="text" maxlength="1000" rows="5" [(ngModel)]="supportRequest.message" placeholder="{{'enter_your_message' | translate}}"></ion-textarea>
+                </div>
+            </ion-item>
+            <ion-button size="large" shape="block" class="btn" (click)="submit()">
+                {{'submit' | translate}}
+            </ion-button>
+        </ion-list>
+    </div>
+    <div class="footer_banner">
+        <img src="assets/images/hero_image.png">
+    </div>
+</ion-content>

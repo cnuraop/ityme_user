@@ -1,0 +1,345 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            <div class="title_inner d-flex">
+
+                <div class="location" (click)="pickLocation()">
+                    <span title="Change Delivery Address">
+                        <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                    </span>
+                </div>
+
+                <h2 (click)="pickLocation()" class="location_text">
+                    <span class="ion-text-wrap">{{getAddressToShow()}}</span>
+                </h2>
+
+                <!-- <h2 *ngIf="selectedLocation == null" (click)="pickLocation()" class="d-flex">
+                    <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                    <span>{{'select_location' | translate}}</span>
+                </h2> -->
+                <span class="end cart_icon" style="color:#397231" (click)="cart()">
+                    <ion-icon class="zmdi zmdi-shopping-cart ion-text-start"></ion-icon>
+                    <ion-badge>{{eComService.getCartItemsCount()}}</ion-badge>
+                </span>
+                <!-- <ion-chip (click)="cart()">
+                    <ion-avatar>
+                        <img src="/assets/images/farm.png">
+                    </ion-avatar>
+                    <ion-label>Regular</ion-label>
+                </ion-chip> -->
+
+            </div>
+        </ion-title>
+    </ion-toolbar>
+
+    <!-- <ion-slides pager="true">
+       <div *ngIf="banners && banners.length" class="offres">
+            <ion-slide>
+                <div class="offer" *ngFor="let banner of banners" (click)="offers()">
+                    <img [src]="banner.image" class="crop_img">
+                </div>
+            </ion-slide>
+        </div>      
+    </ion-slides> -->
+
+
+    <div class="banner">
+        <div class="banner_text">
+            <p class="marquee"><span>
+                    {{getLatestNews()}}
+                </span></p>
+
+            <br />
+            <ion-text color="success">
+                <span class="traditionalFont" *ngIf="apiService.getUserMe() != null">{{'hello' | translate}},
+                    {{apiService.getUserMe().name}} !
+                </span>
+                <span class="traditionalFont" *ngIf="apiService.getUserMe() == null">{{'hello' | translate}}.</span>
+                <span class="traditionalFont">Welcome to Jeevamrut Naturals!</span>
+            </ion-text>
+        </div>
+        <div *ngIf="selectedLocation" class="search_box d-flex" (click)="navSearch()">
+            <ion-icon name="search-outline" class="ion-text-start"></ion-icon>
+            <h2>{{'search_medicines' | translate}}</h2>
+        </div>
+    </div>
+</ion-header>
+
+<ion-content fullscreen *ngIf="selectedLocation">
+    <!-- <div *ngIf="banners && banners.length" class="offres">
+        <h2 class="d-flex" (click)="offers()">{{'offers' | translate}}
+            <span class="end">{{'view_all' | translate}}</span>
+        </h2>
+        <div class="scroll-x">
+            <div class="offer center_img" *ngFor="let banner of banners" (click)="offers()">
+                <img [src]="banner.image" class="crop_img">
+            </div>
+        </div>
+    </div>  -->
+
+    <!--TEMPORARY DURING MY CODING-->
+    <!-- 
+    <div class="banner">
+        <ion-slides *ngIf="banners && banners.length" pager="true" loop="true">
+            <ion-slide *ngFor="let banner of banners">
+                <div class="slide_inner">
+                    <div class="banner_img center_img" (click)="offers()">
+                        <img [src]="banner.image" class="crop_img">
+                    </div>
+                    <div *ngIf="post.featured_media == 0" (click)="postDetailPage(post)">
+                        <img class="crop_img" src="assets/images/life_style.png">
+                    </div>
+                    <div class="banner_details ion-text-start">
+                        <h4 class="helth_care" [innerHTML]="banner.title"></h4>
+                    </div>
+                </div>
+            </ion-slide>
+        </ion-slides>
+    </div> -->
+
+
+    <ion-item>
+        <span *ngIf="regularDeliverySettings != null">Next Delivery Slot: {{regularDeliverySettings.slot1 |
+            date:'fullDate'}}</span>
+    </ion-item>
+    <ion-item style="color:red" *ngIf="regularDeliverySettings != null">
+        <div id="clockdiv">
+            <div>Order within:
+                <span class="days"></span>d
+                <span class="hours"></span>h
+                <span class="minutes"></span>m
+                <span class="seconds"></span>s
+            </div>
+        </div>
+    </ion-item>
+
+    <div class="shop_by_category" *ngIf="categories && categories.length && !haveNothingToShow()">
+        <h2 class="d-flex" (click)="viewAllSubCategories()">Mandi Categories<span class="end">{{'view_all' |
+                translate}}</span></h2>
+               
+        <div class="scroll-x">
+            <div class="category">
+                <div class="category_img center_img">
+                <img (click)="onClickSeasonal()" src="https://admin.ityme.in/storage/1/jf_mangotile.jpg" class="crop_img">
+            </div></div>
+            <div class="category" *ngFor="let cat of categories" (click)="expressSubCategories(cat)">
+                <div class="category_img center_img">
+                    <img [src]="cat.image" class="crop_img">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- <div class="shop_by_category">
+        <h2 class="d-flex"><span>Do not miss Jeevamrut Special Mangoes</span></h2>
+
+        <img src="https://admin.ityme.in/storage/2324/jf-alphonso.jpg" class="sliders" (click)="onClickSeasonal()" />
+    </div> -->
+    <div class="shop_by_category">
+        <h2 class="d-flex">{{'featured' | translate}}</h2>
+        <ion-list lines="none" *ngFor="let product of featured">
+            
+            <ion-card class="ion-no-margin" (click)="navProDetail(product,$event)">
+                <ion-card-content>
+                    <ion-item class="animate__animated animate__fadeInRight">
+
+                        <div class="item_inner d-flex">
+                            <div class="img_box">
+                                <img [src]="product.mediaurls.images !=null && product.mediaurls.images[0].default"
+                                    (click)="navProDetail(product,$event)">
+                            </div>
+                            <div class="text_box">
+                                <div (click)="navProDetail(product,$event)">
+
+                                    <h3>{{product.title}}</h3>
+                                    <h4 *ngIf="product.sale_price > 0"
+                                        style="color: #cf3c4f; text-decoration: line-through; padding-right: 10px">
+                                        {{currency_icon}} {{product.price}} </h4>
+                                    <h4 *ngIf="product.sale_price === null || product.sale_price <= 0">{{currency_icon}}
+                                        {{product.price}} </h4>
+                                    <h4 *ngIf="product.sale_price > 0">{{currency_icon}} {{product.sale_price}} </h4>
+
+                                </div>
+
+                                <div class="buttons d-flex">
+                                    <h5>
+
+                                        <ion-icon color="success" title="Add to wishlist" name="heart"
+                                            *ngIf="product.is_favourite" (click)="toggleFavorite(product,$event)">
+                                        </ion-icon>
+                                        <ion-icon name="heart-outline" title="Add to wishlist"
+                                            *ngIf="!product.is_favourite" (click)="toggleFavorite(product,$event)">
+                                        </ion-icon>
+                                    </h5>
+                                    <p class="end" *ngIf="quantityProCart(product)!=0">
+                                        <span (click)="removeProCart(product,$event)">-</span>
+                                        <strong>{{quantityProCart(product)}}</strong>
+                                        <span (click)="addProCart(product,$event)">+</span>
+                                    </p>
+                                    <h6 *ngIf="quantityProCart(product)==0" class="end">
+                                        <span (click)="addProCart(product,$event)"> {{'add' | translate}}</span>
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-card-content>
+            </ion-card>
+        </ion-list>
+    </div>
+    <div class="banner">
+        <ion-slides *ngIf="banners && banners.length" #slider [options]="slideOpts"
+            (ionSlidesDidLoad)="slidesDidLoad(slider)" pager="false" loop="true">
+            <ion-slide class="slidersOld" *ngFor="let banner of banners">
+                <div (click)="offers(banner)">
+                    <img [src]="banner.image">
+
+                    <!-- <div class="banner_details ion-text-start" >
+                        <h4 class="helth_care" [innerHTML]="banner.title"></h4>
+                    </div> -->
+                </div>
+            </ion-slide>
+        </ion-slides>
+    </div>
+    
+
+
+    <div class="shop_by_category" *ngIf="healthcategories && healthcategories.length && !haveNothingToShow()">
+        <h2 class="d-flex"><span>Shop by Health Requirement</span></h2>
+
+        <div class="scroll-x">
+            <div class="category" *ngFor="let cat of healthcategories" (click)="FindHealthProducts(cat)">
+                <div class="healthcategory_img center_img">
+                    <img [src]="cat.image" class="crop_img">
+                </div>
+                <h2>{{cat.title}}</h2>
+            </div>
+        </div>
+        <h2 class="d-flex"><span>Real Food acts as Medicine</span></h2>
+    </div>
+
+    <!-- <ion-card>
+        <ion-card-header>
+            <ion-card-title>Our Regular Delivery Schedule</ion-card-title>
+         </ion-card-header>
+        <ion-item class="animate__animated animate__fadeInRight">
+            <div id="next-delivery" style="display: block;">
+                <div class="img_box"><img src="assets/images/ic_transist.png" class="after"></div>
+            </div>
+            <div class="delivery-slot">
+                <ul>
+                    <li class="-unavailable"> Sun</li>
+                    <li class="-unavailable"> Mon</li>
+                    <li class="-unavailable"> Tue</li>
+                    <li class="-available"> Wed</li>
+                    <li class="-unavailable"> Thu</li>
+                    <li class="-unavailable"> Fri</li>
+                    <li class="-available"> Sat</li>
+                </ul>
+
+            </div>
+        </ion-item>
+    </ion-card> -->
+
+    <!-- <div class="shop_by_category" *ngIf="categories && categories.length && !haveNothingToShow()">
+        
+        <h2 class="d-flex" (click)="viewAllSubCategories()">Our Natural Selection<span
+                class="end">{{'view_all' | translate}}</span></h2>
+                
+        <div class="scroll-x">
+            <div class="category" *ngFor="let cat of categories" (click)="subCategories(cat)">
+                <div class="category_img center_img">
+                    <img [src]="cat.image" class="crop_img">
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    
+    <ion-card class="deliverySchedule">
+        <h5 class="d-flex heading">Our Regular Delivery Schedule</h5>
+        <div class="mainDiv">
+            <div class="leftDiv">
+                <p class="greenText">Order Between</p>
+            </div>
+            <div class="rightDiv">
+                <p class="greenText">Delivery On</p>
+            </div>
+        </div>
+        <div class="mainDiv">
+            <div class="leftDiv">
+                <p><span class="active"> Thu 10 AM </span>&nbsp; - &nbsp;<span class="active"> Mon 10 AM </span></p>
+            </div>
+            <div class="rightDiv d-flex">
+                <img src="assets/images/delivery_boy.png" class="after">
+                <span class="inactive end"> Wed </span>
+            </div>
+        </div>
+        <div class="mainDiv">
+            <div class="leftDiv">
+                <p><span class="active"> Mon 10 AM </span>&nbsp; - &nbsp;<span class="active"> Thu 10 AM </span></p>
+            </div>
+            <div class="rightDiv d-flex">
+                <img src="assets/images/delivery_boy.png" class="after">
+                <span class="inactive end"> Sat </span>
+            </div>
+        </div>
+    </ion-card>
+
+    <div class="shop_by_category">
+        <h2 class="d-flex"><span>Insist your friends to join our healthy circle</span></h2>
+    <img src="/assets/images/refer_friend.png" (click)="share()" class="img_box" />
+    </div>    
+    <div class="customer_feedbacks" *ngIf="custfeedbacks && custfeedbacks.length">
+        <h2 class="d-flex">{{'customer_feedbacks' | translate}}</h2>
+        <div class="scroll-x">
+            <div class="offer center_img" *ngFor="let custfeedback of custfeedbacks">
+                <img [src]="custfeedback.image" class="crop_img">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="empty-view" *ngIf="haveNothingToShow()">
+        <div style="text-align:center" (click)="pickLocation()">
+            <img src="assets/images/empty_categories.png" alt="no offers" />
+            <span *ngIf="selectedLocation" style="color:#9E9E9E; font-weight:bold;">
+                {{'empty_results' | translate}}
+            </span>
+            <span *ngIf="!selectedLocation" style="color:#9E9E9E; font-weight:bold;">
+                {{'Select_your_location_to_continue' | translate}}
+            </span>
+        </div>
+    </div>
+
+    <ion-list *ngFor="let catPros of vendorsArray;" lines="none">
+        <h5 class="d-flex heading">{{'seller_near_you' | translate}}</h5>
+        <div class="scroll_container">
+            <div class="list_inner" *ngFor="let vendors of catPros.vendors" (click)="navVenDetail(vendors)">
+                <ion-item>
+                    <div class="item_inner d-flex">
+                        <div class="img_box center_img">
+                            <img [src]="vendors.image" class="crop_img">
+                        </div>
+                        <div class="text_box">
+                            <h3>{{vendors.name}}</h3>
+                            <h4 class="d-flex">
+                                <ion-icon class="zmdi zmdi-pin"></ion-icon>
+                                <span>{{vendors.distance_toshow}} | {{vendors.address}}</span>
+                            </h4>
+                        </div>
+                    </div>
+                </ion-item>
+            </div>
+        </div>
+    </ion-list>
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+        <ion-fab-button title="Have any queries?" href="https://wa.me/+919573123971">
+            <ion-icon title="Have any queries?" name="logo-whatsapp"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>

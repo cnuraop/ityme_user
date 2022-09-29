@@ -1,0 +1,71 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <!-- <ion-title></ion-title> -->
+    </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <div class="container ion-text-center">
+        <p *ngIf="(orderFailed)" [innerHTML]="('order_failed_msg') | translate"> </p>
+    </div>
+
+    <ion-list lines="none" *ngIf="(orderIsCod || payumoneyDone)">
+        <img src="/assets/images/refer_friend.png" (click)="share()" class="img_box" />  
+        <ion-item-group>
+            <div *ngFor="let order of placedOrders; let i=index">                
+                <ion-item  *ngIf="i==0" color="primary">
+                    <ion-label> {{ ((orderIsCod || payumoneyDone) ? 'order_placed' : 'order_failed') | translate}} <br />
+                        </ion-label>
+                  </ion-item>
+                <ion-list-header color="success">
+                    <ion-label> 
+                         <h4 class="d-flex">
+                            <span class="end">{{'order_id' | translate}}{{order.id}} | {{this.currency_icon +
+                                order.total}}
+                            </span>
+                            <span class="end order_status">{{('order_status_'+order.status)
+                                | translate}}</span>
+                        </h4>
+                         </ion-label>
+                </ion-list-header>
+                <!-- <ion-item *ngIf="order.id > 0">                         
+                            {{order.vendor.name}}                       
+                </ion-item> -->
+                <ion-item>
+                    <div class="d-flex">
+                        <div>
+                            <h6 *ngFor="let product of order.products">
+                                {{product?.vendor_product?.product.title}}
+                            </h6>
+                        </div>
+                    </div>
+                </ion-item>
+                <ion-item>
+                    <div *ngIf="order.seasonal == 1 && order?.dispatch_week!=null && order?.dispatch_week!='Regular' ">
+                        <h2 class="d-flex">
+                            Delivery Scheduled for: {{order?.dispatch_week}}
+                        </h2>
+                    </div>
+                    <div *ngIf="order.seasonal == 0">
+                        <h2 class="d-flex">
+                            Delivery: {{order.delivery_date | date:'fullDate'}}
+                        </h2>
+                    </div>
+                </ion-item>
+                <ion-item-divider>
+                    <ion-label></ion-label>
+                  </ion-item-divider>
+            </div>
+        </ion-item-group>
+    </ion-list>
+
+</ion-content>
+<ion-footer class="ion-no-border">
+
+    <ion-button size="large" shape="full" class="btn" (click)="navMyOrders()">
+        {{'my_orders' | translate}}
+    </ion-button>
+</ion-footer>

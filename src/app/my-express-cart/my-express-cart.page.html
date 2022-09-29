@@ -1,0 +1,127 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>My Express Cart</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color">
+    <div class="empty-view" *ngIf="!eComService.getCartItems() || !eComService.getCartItems().length">
+        <div style="text-align:center">
+            <img src="assets/images/empty_orders.png" alt="no offers"/>
+            <span style="color:#9E9E9E; font-weight:bold;">
+                {{'empty_cart' | translate}}
+            </span>
+        </div>
+    </div>
+    <ion-label *ngIf="wedFriDeliveryDate && !(currentDay == 2 || currentDay ==5)">
+        <h5> Next day delivery is moved to <span style="color:green; font-weight:bold">{{deliveryDay}}</span>. if you like your order to
+            be delivered tomorrow, your cart can only contain items marked with "Next Day"</h5>
+    </ion-label>
+    <ion-list *ngFor="let ci of eComService.getCartItems()" class="item_list" lines="none">
+        <ion-item>
+            <div class="item_inner d-flex">
+                <div class="item_img">
+                    <img [src]="ci.image">
+                </div>
+                <div class="text_box">
+                    <h2 class="d-flex">
+                        {{ci.title}}
+                    </h2>
+                    <h3>{{ci.subtitle}}</h3>
+                    <h3 *ngIf="ci.getOriginalTotal(true) !=0"
+                        style="color: #cf3c4f; text-decoration: line-through; padding-right: 10px">{{currency_icon}} {{ci.getOriginalTotal(true)}} </h3>
+                    <h4><span *ngIf="ci.week != null">{{ci.week}}</span></h4>
+
+
+                    <h4 class="d-flex">
+                        <span class="add_remove_btn ion-text-start"
+                              (click)="removeOrDecrementCartItemAndCheck(ci)">-</span>
+                        <strong>{{ci.quantity}}</strong>
+                        <span class="add_remove_btn add ion-text-end"
+                              (click)="eComService.addOrIncrementCartItem(ci)">+</span>
+                        <span class="end">{{currency_icon}}{{ci.getTotal(true)}}</span>
+                    </h4>
+                </div>
+            </div>
+
+        </ion-item>
+        <ion-label
+                *ngIf="!(currentDay == 2 || currentDay == 5) && ci.product.delivery_type == '2DAYDELIVERY'; else dailyDelivery">
+            <ion-badge style="background: orange;">Delivery: Wed & Sat Only</ion-badge>
+        </ion-label>
+        <ng-template #dailyDelivery>
+            <ion-badge>Delivery: Next Day</ion-badge>
+        </ng-template>
+    </ion-list>
+</ion-content>
+<ion-footer *ngIf="eComService.getCartItems() && eComService.getCartItems().length" class="ion-no-border">
+    <div class="form" [ngClass]="fabAction ? 'active' : ''">
+        <ion-item lines="none">
+            <ion-input type="text" [(ngModel)]="couponCode" placeholder="{{'add_promocode' | translate}}"
+                       (keyup.enter)="verifyCoupon()"></ion-input>
+            <div slot="end" class="item_end d-flex">
+                <!-- <h3 (click)="navOffers()">{{'view_offers' | translate}}</h3> -->
+                <ion-icon *ngIf="!couponRes" class="zmdi zmdi-check" slot="end" (click)="verifyCoupon()"></ion-icon>
+                <ion-icon *ngIf="couponRes" class="zmdi zmdi-close" slot="end" (click)="removeCoupon()"></ion-icon>
+            </div>
+        </ion-item>
+<!--        <ion-item class="amount_payable">-->
+<!--            <div class="item_inner">-->
+<!--                <h3 class="d-flex"> Delivery Date <span-->
+<!--                        class="end">{{deliverySlots[0]}}</span></h3>-->
+<!--            </div>-->
+<!--        </ion-item>-->
+        <div>
+            <h5 class="d-flex"> Delivery Date : <span
+                    class="end">{{deliveryDay}}</span></h5>
+        </div>
+        <div class="payment_details">
+            <div class="container">
+                <h2 class="d-flex">
+                    {{'sub_total' | translate}}
+                    <span class="end">{{currency_icon}}{{eComService.getCartItemsTotal(true)}}</span>
+                </h2>
+                <div *ngIf="eComService.getCartItemsSavings(true)!=0">
+                    <h2 class="d-flex" style="color: green;">
+                        Savings
+                        <span style="color: green;"
+                              class="end">{{currency_icon}}{{eComService.getCartItemsSavings(true)}}</span>
+                    </h2></div>
+                <h2 *ngFor="let ec of eComService.getExtraCharges()" class="d-flex">
+                    {{ec.id | translate}}
+                    <span class="end">{{ec.priceToShow}}</span>
+                </h2>
+            </div>
+            <div class="amount_payable" (click)="toggleFab()">
+                <h2 class="d-flex">
+                    {{'amount_payable' | translate}}
+                    <ion-icon class="zmdi zmdi-alert-circle-o"></ion-icon>
+                    <ion-icon class="zmdi zmdi-chevron-down"></ion-icon>
+                    <span class="end">{{currency_icon}}{{eComService.getCartTotal(true)}}</span>
+                </h2>
+            </div>
+        </div>
+    </div>
+    <!--    <p class="note" *ngIf="!this.isSubscribed">To get benefits of free delivery and no minimum order, please subscribe-->
+    <!--        to JF Prime membership.</p>-->
+
+
+    <ion-button *ngIf='!this.isSubscribed && eComService.getCartItemsTotal(true) < 1000' size="large" shape="full"
+                class="btn">
+        {{'add_more' | translate}}{{currency_icon}}{{1000 - eComService.getCartItemsTotal(true)}}{{'add_more_for_free_delivery' | translate}}
+    </ion-button>
+
+    <ion-button *ngIf='!this.isSubscribed && eComService.getCartItemsTotal(true) < 300' size="large" shape="full"
+                class="btn">
+        {{'min_order' | translate}}
+    </ion-button>
+
+    <ion-button *ngIf='this.isSubscribed || eComService.getCartItemsTotal(true) >= 300' size="large" shape="full"
+                class="btn" (click)="navCheckout()">
+        {{'checkout' | translate}}
+        <ion-icon class="zmdi zmdi-chevron-right"></ion-icon>
+    </ion-button>
+</ion-footer>

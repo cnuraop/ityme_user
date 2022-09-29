@@ -1,0 +1,328 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+      </ion-buttons>
+      <ion-title>
+          <div class="title_inner d-flex">
+              <span>{{'order_id' | translate}}{{order.id}}</span>
+              <!-- <ion-icon class="zmdi zmdi-more-vert end ion-text-end"></ion-icon> -->
+          </div>
+      </ion-title>
+  </ion-toolbar>
+  <div class="item_about d-flex"
+       [ngClass]="{'in_transist': (order.status=='dispatched' || order.status=='intransit'), 'delivered':order.status=='complete', 'confirmed':order.status=='accepted' }">
+      <div class="img_box center_img">
+          <img [src]="order.vendor.image" class="crop_img">
+      </div>
+      <div class="text_box">
+          <h3 class="d-flex">{{order.vendor.name}} <span
+                  class="end order_status">{{('order_status_' + order.status) | translate}}</span></h3>
+          <h4 class="d-flex">{{order.created_at}} <span class="end">{{order.total_toshow}} |
+              {{order?.payment?.payment_method?.title}}</span></h4>
+      </div>
+  </div>
+</ion-header>
+
+
+<!--
+<ion-content class="bg_color">
+<ion-list lines="none">
+  <ion-item
+    [ngClass]="{'in_transist': (order.status=='dispatched' || order.status=='intransit'), 'delivered':order.status=='complete', 'confirmed':order.status=='accepted' }">
+    <div class="item_inner">
+      <h2 class="d-flex">
+        {{'order_id' | translate}}{{order.id}}
+        <span class="end order_status">{{('order_status_'+order.status) | translate}}</span>
+      </h2>
+
+      <ion-row>
+        <ion-col size="4">
+          <h3>{{'ordered_on' | translate}}</h3>
+          <h4>{{order.created_at}}</h4>
+        </ion-col>
+        <ion-col>
+          <h3>{{'amount' | translate}}</h3>
+          <h4>{{order.total_toshow}}</h4>
+        </ion-col>
+        <ion-col>
+          <h3>{{'payment' | translate}}</h3>
+          <h4 *ngIf="order.payment && order.payment.payment_method">{{order.payment.payment_method.title}}
+          </h4>
+          <h4 *ngIf="!(order.payment && order.payment.payment_method)">COD</h4>
+        </ion-col>
+        <ion-col size="3">
+          <h3>{{'items' | translate}}</h3>
+          <h4>{{order.products.length}} {{'items' | translate}}</h4>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-item>
+
+  <div class="order_step ion-text-center">
+    <ion-row>
+      <ion-col size="4" [ngClass]="orderProgress>=1?'active':''">
+        <div class="img_box">
+          <img src="assets/images/ic_confirm_non.png">
+          <img src="assets/images/ic_confirm.png">
+        </div>
+        <h2>{{'confirmed' | translate}}</h2>
+      </ion-col>
+      <ion-col size="4" [ngClass]="orderProgress>=2?'active':''">
+        <div class="img_box">
+          <img src="assets/images/ic_transist_non.png">
+          <img src="assets/images/ic_transist.png">
+        </div>
+        <h2>{{'processing' | translate}}</h2>
+      </ion-col>
+      <ion-col size="4" [ngClass]="orderProgress>=3?'active':''">
+        <div class="img_box">
+          <img src="assets/images/ic_delivered_non.png">
+          <img src="assets/images/ic_delivered.png">
+        </div>
+        <h2>{{'completed' | translate}}</h2>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <ion-item class="ordered_items">
+    <div class="item_inner">
+      <h2 class="d-flex"> {{'ordered_items' | translate}} </h2>
+      <div class="item_container">
+        <div *ngFor="let product of order.products" class="item">
+          <h3 class="d-flex">{{product.vendor_product.product.title}}
+            <span *ngIf="product.vendor_product.product.prescription_required"
+              class="prescription_required ion-text-end">
+              <img src="assets/images/px.png">
+            </span>
+          </h3>
+          <h4 class="d-flex">
+            {{product.vendor_product.vendor.name}}
+            <span class="end">{{product.total_toshow}}</span>
+          </h4>
+        </div>
+      </div>
+    </div>
+  </ion-item>
+
+   <ion-item class="upload_prescription">
+    <div class="item_inner d-flex">
+      <div class="icon_box ion-text-start">
+        <img src="assets/images/px.png">
+      </div>
+      <h2 class="d-flex">
+        {{'presription_uploaded' | translate}}
+        <ion-icon class="zmdi zmdi-eye ion-text-end end"></ion-icon>
+      </h2>
+    </div>
+  </ion-item> 
+</ion-list>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+<div class="form" [ngClass]="fabAction ? 'active' : ''">
+  <div class="payment_details">
+    <div class="container">
+      <h2 class="d-flex">
+        {{'sub_total' | translate}}
+        <span class="end">{{order.subtotal_toshow}}</span>
+      </h2>
+      <h2 *ngIf="order.taxes_toshow" class="d-flex">
+        {{'tax_in_percent' | translate}}
+        <span class="end">{{order.taxes_toshow}}</span>
+      </h2>
+      <h2 *ngIf="order.delivery_fee_toshow" class="d-flex">
+        {{'delivery_fee' | translate}}
+        <span class="end">{{order.delivery_fee_toshow}}</span>
+      </h2>
+      <h2 *ngIf="order.discount_toshow" class="d-flex">
+        {{'discount' | translate}}
+        <span class="end">- {{order.discount_toshow}}</span>
+      </h2>
+    </div>
+    <div class="amount_payable" (click)="toggleFab()">
+      <h2 class="d-flex">
+        {{'total' | translate}}
+        <ion-icon class="zmdi zmdi-alert-circle-o"></ion-icon>
+        <ion-icon class="zmdi zmdi-chevron-down"></ion-icon>
+        <span class="end">{{order.total_toshow}}</span>
+      </h2>
+    </div>
+  </div>
+</div>
+<ion-button size="large" shape="full" class="btn" [disabled]="!canTrack()" (click)="navTrackOrder()">
+  <ion-icon class="zmdi zmdi-navigation ion-text-start"></ion-icon>
+  {{'track_order' | translate}}
+</ion-button>
+</ion-footer>
+-->
+
+
+<ion-content class="bg_color">
+  <ion-list lines="none">
+      <div class="order_status">
+          <ion-item class="" [ngClass]="{'done':orderProgress>=2,'active':orderProgress==1}">
+              <div class="item_inner d-flex" style="height: 53px;">
+                  <div class="icon_box">
+                      <ion-icon class="zmdi zmdi-check-circle"></ion-icon>
+                      <ion-icon class="zmdi zmdi-circle-o"></ion-icon>
+                  </div>
+                  <div class="text_box">
+                      <h2>{{'order_confirmed' | translate}}</h2>
+                      <!-- <h3>3:40 pm | 20 June 2020</h3> -->
+                  </div>
+              </div>
+              <div class="circle_icon">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+              </div>
+          </ion-item>
+
+          <ion-item [ngClass]="{'done':orderProgress>=3,'active':orderProgress==2}">
+              <div class="item_inner d-flex" style="height: 53px;">
+                  <div class="icon_box">
+                      <ion-icon class="zmdi zmdi-check-circle"></ion-icon>
+                      <ion-icon class="zmdi zmdi-circle-o"></ion-icon>
+                  </div>
+                  <div class="text_box">
+                      <h2 class="d-flex">{{'order_picked' | translate}}
+                          <span *ngIf="orderProgress == 2" class="end" (click)="navTrackOrder()">
+                              <ion-icon class="zmdi zmdi-navigation"></ion-icon>
+                              {{'track' | translate}}
+                          </span>
+                      </h2>
+                      <!-- <h3>4:32 pm | 20 June 2020</h3> -->
+                  </div>
+              </div>
+              <div class="circle_icon">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+              </div>
+          </ion-item>
+
+          <ion-item [ngClass]="{'done':orderProgress>=3,'active':orderProgress==3}">
+              <div class="item_inner d-flex" style="height: 53px;">
+                  <div class="icon_box">
+                      <ion-icon class="zmdi zmdi-check-circle"></ion-icon>
+                      <ion-icon class="zmdi zmdi-circle-o"></ion-icon>
+                  </div>
+                  <div class="text_box">
+                      <h2>{{'order_delivered' | translate}}</h2>
+                      <!-- <h3>{{'yet_to_delivered' | translate}}</h3> -->
+                  </div>
+              </div>
+          </ion-item>
+      </div>
+
+      <div class="item_list">
+          <h2>{{'ordered_items' | translate}}</h2>
+          <ion-item *ngFor="let product of order.products">
+              <div class="item_inner">
+                  <h3 *ngIf="product.delivered_quantity == null ||
+                  (product.quantity - product.delivered_quantity < product.quantity
+                  && product.quantity - product.delivered_quantity > 0)"
+                      class="d-flex"> {{product?.vendor_product?.product.title }}</h3>
+                  <h3 *ngIf="product.quantity - product.delivered_quantity == 0" class="d-flex"
+                      style="text-decoration:line-through;">
+                      {{product?.vendor_product?.product.title }}
+                  </h3>
+                  <h4 class="d-flex">
+                      <a *ngIf="product.quantity - product.delivered_quantity < product.quantity "
+                         style="text-decoration:line-through; color: red">x {{product?.quantity}} </a>
+                      <a *ngIf="product.quantity - product.delivered_quantity < product.quantity "> (
+                          x {{product?.quantity - product?.delivered_quantity}})</a>
+                      <span class="end">
+                      <a *ngIf="product.quantity - product.delivered_quantity < product.quantity "
+                         style="text-decoration:line-through; color: red">( Rs {{product.total}} /- )</a>
+                      <a *ngIf="product.quantity - product.delivered_quantity < product.quantity "
+                         style="font-weight:bold"> Rs {{product.total - product.refund}}
+                          /-</a>
+                      </span>
+                  </h4>
+                  <h4 *ngIf="product.quantity - product.delivered_quantity < product.quantity " class="d-flex">
+                      x {{product?.delivered_quantity}}
+                      <span class="end"> Refund : Rs {{product.refund}} /- </span>
+                  </h4>
+                  <h4 *ngIf="product.delivered_quantity == null" class="d-flex">x {{product?.quantity}}
+                      <span class="end"> Rs {{product.total}} /- </span>
+                  </h4>
+              </div>
+          </ion-item>
+      </div>
+
+      <ion-item *ngIf="prescriptionLink != null" class="upload_prescription">
+          <div class="item_inner d-flex">
+              <div class="item_img">
+                  <img src="assets/images/px.png">
+              </div>
+              <h2 class="d-flex">
+                  {{'prescription_uploaded' | translate}}
+                  <span class="icon_box end" (click)="viewPresciption()">
+                      <ion-icon class="zmdi zmdi-eye ion-text-end"></ion-icon>
+                  </span>
+              </h2>
+          </div>
+      </ion-item>
+
+      <div class="payment_details">
+          <ion-item>
+              <div class="item_inner">
+                  <h3 class="d-flex"> {{'sub_total' | translate}} <span class="end">Rs {{order.subtotal}} /-</span>
+                  </h3>
+              </div>
+          </ion-item>
+          <ion-item *ngIf="order.delivery_fee >=0">
+              <div class="item_inner">
+                  <h3 class="d-flex"> {{'delivery_fee' | translate}}<span class="end"> Rs {{order.delivery_fee}}
+                      /-</span></h3>
+              </div>
+          </ion-item>
+          <ion-item>
+              <div class="item_inner">
+                  <h3 class="d-flex"> {{'order_total' | translate}} <span class="end">Rs {{order.total}} /-</span>
+                  </h3>
+              </div>
+          </ion-item>
+
+          <ion-item *ngIf="order.refund_total">
+              <div class="item_inner">
+                  <h3 class="d-flex"> {{'refund' | translate}} <span class="end">Rs {{order.refund_total}} /-</span>
+                  </h3>
+              </div>
+          </ion-item>
+          <ion-item *ngIf="order.final_total >=0  && order.refund_total">
+              <div class="item_inner">
+                  <h3 class="d-flex"> {{'final_total' | translate}} <span class="end">Rs {{order.final_total}}
+                      /-</span>
+                  </h3>
+              </div>
+          </ion-item>
+          <ion-item *ngIf="order.taxes_toshow">
+              <div class="item_inner">
+                  <h3 class="d-flex"> {{'tax_in_percent' | translate}} <span class="end">{{order.taxes_toshow}}</span>
+                  </h3>
+              </div>
+          </ion-item>
+          <ion-item *ngIf="order.discount_toshow">
+              <div class="item_inner">
+                  <h3 class="d-flex"> {{'promo_code_applied' | translate}} <span
+                          class="end">-{{order.discount_toshow}}</span></h3>
+              </div>
+          </ion-item>
+          <ion-item class="amount_payable">
+              <div class="item_inner">
+                  <h3 class="d-flex"> {{'amount_via' | translate}}
+                      {{order?.payment?.payment_method?.slug || 'COD' | uppercase}} <span class="end">
+                          {{order.total_toshow}}</span></h3>
+              </div>
+          </ion-item>
+          <ion-item>
+              <div *ngIf="order.refund_total" class="item_inner">
+                  <span class="d-flex"> Refund of Rs {{order.refund_total}} /- is added to your wallet.</span>
+              </div>
+          </ion-item>
+      </div>
+  </ion-list>
+</ion-content>

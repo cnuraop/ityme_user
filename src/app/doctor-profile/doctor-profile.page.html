@@ -1,0 +1,122 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            <div class="title_inner d-flex">
+                <h3 [ngClass]="doctor.is_favourite ? 'end active' : 'end'" (click)="toggleFavorite()">
+                    <ion-icon class="zmdi zmdi-bookmark-outline"></ion-icon>
+                    <ion-icon class="zmdi zmdi-bookmark"></ion-icon>
+                </h3>
+            </div>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color" fullscreen>
+    <div class="banner d-flex">
+        <div class="doctor_details">
+            <div *ngIf="doctor.user && doctor.user.image_url" class="img_box center_img">
+                <img [src]="doctor.user.image_url" class="crop_img">
+            </div>
+            <div *ngIf="!doctor.user || !doctor.user.image_url" class="img_box center_img">
+                <img src="assets/images/empty_dp.png" class="crop_img">
+            </div>
+            <h2>{{doctor.name}}</h2>
+            <h3>{{doctor.specializations_text}}</h3>
+            <p>{{doctor.degrees_text}}</p>
+        </div>
+        <div class="" style="display: block; min-width:20px; height: 100%;"></div>
+        <div class="other_details">
+            <div class="text_box">
+                <h3> {{'experience' | translate}}</h3>
+                <h4> {{doctor.experience_years}} {{'years' | translate}}</h4>
+            </div>
+
+            <div class="text_box">
+                <h3> {{'consultancy_fees' | translate}}</h3>
+                <h4> {{currencyIcon}}{{doctor.consultancy_fee}}</h4>
+            </div>
+
+            <div class="text_box feedback" (click)="navDocrorReviews()">
+                <h3> {{'feedback' | translate}}</h3>
+                <h4 class="d-flex">
+                    <span>
+                        <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                        {{doctor.ratings}}
+                    </span>&nbsp;
+                    ({{doctor.ratings_count}})
+                    <ion-icon class="zmdi zmdi-chevron-right ion-text-end end"></ion-icon>
+                    <!--
+                        <ion-icon [ngClass]="doctor.ratings>=1 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'">
+                        </ion-icon>
+                        <ion-icon [ngClass]="doctor.ratings>=2 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'">
+                        </ion-icon>
+                        <ion-icon [ngClass]="doctor.ratings>=3 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'">
+                        </ion-icon>
+                        <ion-icon [ngClass]="doctor.ratings>=4 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'">
+                        </ion-icon>
+                        <ion-icon [ngClass]="doctor.ratings>=5 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'">
+                        </ion-icon>
+-->
+                </h4>
+            </div>
+
+            <div class="text_box availability">
+                <h3> {{'availability' | translate}}</h3>
+                <h4 class="d-flex">{{availabilityToday}}
+                    <!-- <ion-icon class="zmdi zmdi-chevron-right ion-text-end end"></ion-icon> -->
+                </h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab_content">
+        <!--About section start> -->
+        <ion-list lines="none">
+            <ion-card>
+                <h2>{{'services_at' | translate}}</h2>
+                <div class="text_box" *ngFor="let hospital of doctor.hospitals" (click)="navHospitalInfo(hospital)">
+                    <h3> {{hospital.name}} </h3>
+                    <h4 class="d-flex">{{hospital.address}}
+                        <ion-icon class="zmdi zmdi-chevron-right ion-text-end end"></ion-icon>
+                    </h4>
+                </div>
+
+                <!-- <div class="map_box">
+                    <img [src]="doc_map">
+                </div> -->
+
+                <!-- <h5>+ 1 {{'more' | translate}}</h5> -->
+            </ion-card>
+            <ion-card class="services">
+                <h2>{{'services' | translate}}</h2>
+                <div class="text_box" *ngFor="let category of doctor.services">
+                    <h3> {{category.title}} </h3>
+                </div>
+                <!-- <h5>+ 5 {{'more' | translate}}</h5> -->
+            </ion-card>
+
+            <ion-card class="services">
+                <h2>{{'specialization' | translate}}</h2>
+                <div class="text_box" *ngFor="let category of doctor.specializations">
+                    <h3> {{category.title}}</h3>
+                </div>
+                <!-- <h5>+ 1 {{'more' | translate}}</h5> -->
+            </ion-card>
+        </ion-list>
+    </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+    <ion-button *ngIf="tabDprofile == 'about'" size="large" shape="full" class="btn" (click)="navBookNow()">
+        <ion-icon slot="start" class="zmdi zmdi-calendar-alt"></ion-icon>
+        {{'book_appointment_now' | translate}}
+    </ion-button>
+
+    <!-- <ion-button *ngIf="tabDprofile == 'feedback'" size="large" shape="full" class="btn" (click)="navFeedback()">
+		<ion-icon slot="start" class="zmdi zmdi-thumb-up-down"></ion-icon>
+		{{'give_feedback' | translate}}
+	</ion-button> -->
+</ion-footer>

@@ -1,0 +1,42 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+		</ion-buttons>
+		<ion-title>{{'pill_reminders' | translate}}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color">
+	<div class="empty-view" *ngIf="!reminders || !reminders.length">
+		<div style="text-align:center">
+			<img src="assets/images/empty_orders.png" alt="no offers" />
+			<span style="color:#9E9E9E; font-weight:bold; display: block;">{{"empty_reminders" | translate}}</span>
+		</div>
+	</div>
+	<ion-list lines="none">
+		<ion-item *ngFor="let reminder of reminders">
+			<div class="item_inner d-flex">
+				<div class="icon_box">
+					<ion-icon class="zmdi zmdi-notifications-active ion-text-center">
+					</ion-icon>
+				</div>
+				<div class="text_box">
+					<h2 class="d-flex">
+						{{reminder.title}}
+						<ion-icon class="zmdi zmdi-delete end ion-text-end" (click)="deleteReminder(reminder)">
+						</ion-icon>
+					</h2>
+					<h3>{{reminder.subTitle}}</h3>
+					<h4>{{reminder.body}}</h4>
+				</div>
+			</div>
+		</ion-item>
+	</ion-list>
+
+	<ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="navNewReminder()">
+		<ion-fab-button mode="md">
+			<ion-icon class="zmdi zmdi-plus"></ion-icon>
+		</ion-fab-button>
+	</ion-fab>
+</ion-content>

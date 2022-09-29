@@ -1,0 +1,87 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+		</ion-buttons>
+		<ion-title>{{'select_address' | translate}}</ion-title>
+	</ion-toolbar>
+
+	<ion-row class="order-steps">
+		<ion-col size="4" class="done ion-text-center">
+			<ion-icon class="zmdi zmdi-mall"></ion-icon>
+		</ion-col>
+		<ion-col size="4" class="ion-text-center">
+			<ion-icon class="zmdi zmdi-card"></ion-icon>
+		</ion-col>
+		<ion-col size="4" class=" ion-text-center">
+			<ion-icon class="zmdi zmdi-assignment-check"></ion-icon>
+		</ion-col>
+	</ion-row>
+</ion-header>
+
+<ion-content class="bg_color">
+	<div class="empty-view" *ngIf="!isLoading && (!addresses || !addresses.length)">
+		<div style="text-align:center">
+			<img src="assets/images/empty_address.png" alt="no offers" />
+			<span style="color:#9E9E9E; font-weight:bold; display: block;">{{"empty_addresses" | translate}}</span>
+		</div>
+	</div>
+	<div class="form">
+		<ion-list lines="none">
+			<ion-radio-group value="{{addressIdSelected}}" (ionChange)="onAddressSelected($event)">
+				<ion-item *ngFor="let address of addresses" lines="none">
+					<ion-radio slot="start" value="{{address.id}}"></ion-radio>
+					<ion-label class="d-flex">
+						<div class="img_container">
+							<div [ngSwitch]="address.title" class="img_box">
+								<img src="assets/images/ic_home.png" *ngSwitchDefault>
+								<img src="assets/images/ic_home.png" *ngSwitchCase="'home'">
+								<img src="assets/images/ic_home_active.png" *ngSwitchCase="'home'">
+								<img src="assets/images/ic_office.png" *ngSwitchCase="'office'">
+								<img src="assets/images/ic_office_active.png" *ngSwitchCase="'office'">
+								<img src="assets/images/ic_location.png" *ngSwitchCase="'other'">
+								<img src="assets/images/ic_location_active.png" *ngSwitchCase="'other'">
+							</div>
+							<h2>{{address.title | translate}}</h2>
+						</div>
+						<p>{{getAddressToShow(address)}}</p>
+					</ion-label>
+				</ion-item>
+			</ion-radio-group>
+
+			<ion-button size="large" shape="block" class="btn" (click)="navAddressNew()">
+				<ion-icon class="zmdi zmdi-plus"></ion-icon> &nbsp;
+				{{'add_new_location' | translate}}
+			</ion-button>
+		</ion-list>
+	</div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+	<div class="form" [ngClass]="fabAction ? 'active' : ''">
+		<div class="payment_details">
+			<div class="container">
+				<h2 class="d-flex">
+					{{'sub_total' | translate}}
+					<span class="end">{{currency_icon}}{{eComService.getCartItemsTotal(true)}}</span>
+				</h2>
+				<h2 *ngFor="let ec of eComService.getExtraCharges()" class="d-flex">
+					{{ec.id | translate}}
+					<span class="end">{{ec.priceToShow}}</span>
+				</h2>
+			</div>
+			<div class="amount_payable" (click)="toggleFab()">
+				<h2 class="d-flex">
+					{{'amount_payable' | translate}}
+					<ion-icon class="zmdi zmdi-alert-circle-o"></ion-icon>
+					<ion-icon class="zmdi zmdi-chevron-down"></ion-icon>
+					<span class="end">{{currency_icon}}{{eComService.getCartTotal(true)}}</span>
+				</h2>
+			</div>
+		</div>
+	</div>
+	<ion-button size="large" shape="full" class="btn" (click)="navPaymentSelection()">
+		{{'proceed_to_payment' | translate}}
+		<ion-icon class="zmdi zmdi-chevron-right"></ion-icon>
+	</ion-button>
+</ion-footer>

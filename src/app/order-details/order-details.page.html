@@ -1,0 +1,151 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <!-- <ion-title></ion-title> -->
+    </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="component-content">
+    <div class="d-flex">
+        <ion-label>Delivery Status</ion-label>
+        <ion-item>
+            <ion-select [(ngModel)]="input_order_status" (ionChange)="SearchStatus($event)" interface="popover" placeholder="Payment Status">
+                <ion-select-option value="all">All</ion-select-option>
+                <ion-select-option value="new">New</ion-select-option>
+                <ion-select-option value="pickup">Packing Done</ion-select-option>
+                <ion-select-option value="started">InTransit</ion-select-option>
+                <ion-select-option value="complete">Complete</ion-select-option>
+            </ion-select>
+        </ion-item>
+    </div>
+    <div class="d-flex">
+        <ion-label>Payment Status</ion-label>
+        <ion-item>
+            <ion-select [(ngModel)]="input_payment_status" (ionChange)="SearchStatus($event)" interface="popover" placeholder="Payment Status">
+                <ion-select-option value="all">All</ion-select-option>
+                <ion-select-option value="paid">Paid</ion-select-option>
+                <ion-select-option value="failed">Failed</ion-select-option>
+                <ion-select-option value="pending">Pending</ion-select-option>
+                <ion-select-option value="postpaid">Post-Paid</ion-select-option>
+            </ion-select>
+        </ion-item>
+    </div>
+
+    <div class="d-flex">
+        <ion-item>
+            <ion-select [(ngModel)]="input_express" (ionChange)="SearchRegex($event)"  interface="popover" placeholder="Type">
+                <ion-select-option value="2">All</ion-select-option>
+                <ion-select-option value="0">Regular</ion-select-option>
+                <ion-select-option value="1">Express</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-select interface="popover" [(ngModel)]="input_seasonal" (ionChange)="SearchSeasonal($event)"  placeholder="Seasonal">
+                <ion-select-option value="2">All</ion-select-option>
+                <ion-select-option value="1">Seasonal</ion-select-option>
+                <ion-select-option value="1">Mango</ion-select-option>
+                <ion-select-option value="2">Milk</ion-select-option>
+            </ion-select>
+        </ion-item>
+    </div>
+    <div class="search_box d-flex">
+        <ion-icon class="zmdi zmdi-search ion-text-start"></ion-icon>
+        <ion-searchbar class="ion-no-padding" searchIcon="hide" debounce="1000" (ionChange)="onSearchbarChange($event)"
+            placeholder="Search by Order ID"></ion-searchbar>
+            <ion-button size="small" shape="full" (click)="SearchOrders()">
+                Search
+            </ion-button>
+    </div>
+    
+    <ion-list>
+        <div *ngFor="let orderDetail of orderDetails; let i=index">
+            <ion-list-header color="success" (click)="toggleDetails(orderDetail)">
+                <ion-label>
+                    <h4 class="d-flex">
+                        <ion-icon color="danger" item-right [name]="orderDetail.icon"></ion-icon>
+                        <span class="end">Order ID: #{{orderDetail.payment_id}} | {{this.currency_icon +
+                            orderDetail.amount}}
+                        </span>
+                        <span class="end"></span>
+                    </h4>
+                </ion-label>
+            </ion-list-header>
+            <ion-item color="success">
+                <span>Pending Amount | {{this.currency_icon +
+                    orderDetail.pending_amount}}
+                </span><span class="end"></span>
+                <!-- <span class="end order_status">Status | {{orderDetail.payment_method_id}}</span> -->
+            </ion-item>
+
+            <div *ngIf="orderDetail.showDetails">
+                <ion-list>
+                    <div *ngFor="let order of orderDetail.orders; let i=index" (click)="navOrderDetail(order,orderDetail)">
+                        <ion-list-header color="warning">
+                           
+                            <ion-label>
+                                <ion-badge color="success"  *ngIf="order.express==1">Express</ion-badge>
+                                <ion-badge color="danger"  *ngIf="order.express==0 && order.seasonal==0">Regular</ion-badge>
+                                <ion-badge color="tertiary"  *ngIf="order.seasonal==1">Seasonal</ion-badge>
+                                <h4 class="d-flex">
+                                    <span>Sub-Order ID:{{order.id}} | {{this.currency_icon +
+                                        order.total}}
+                                    </span>
+                                    
+                                   
+                                </h4>
+                            </ion-label>
+                        </ion-list-header>
+                        <ion-item>
+                            Delivery Status: 
+                                <div *ngIf="order.delivery_status == undefined || order.delivery_status == null && order.status != 'failed' ">NEW</div>
+                            
+                            <span>{{order.delivery_status}}</span>
+                        </ion-item>
+                        <ion-item>
+                            Payment Status: {{order?.status}}
+                        </ion-item>
+                        <ion-item>
+                            Farmer/Seller: {{order?.vendor[0]?.name}}
+                        </ion-item>
+                        <ion-item>
+                            <div class="d-flex">
+                                <div>
+                                    <h6 *ngFor="let product of order.products">
+                                        {{product?.title}}
+                                    </h6>
+                                </div>
+                            </div>
+                        </ion-item>
+                        <ion-item>
+                            <div
+                                *ngIf="order.seasonal == 1 && order?.dispatch_week!=null && order?.dispatch_week!='Regular' ">
+                                <h2 class="d-flex">
+                                    Delivery scheduled for: {{order?.dispatch_week}}
+                                </h2>
+                            </div>
+                            <div *ngIf="order.seasonal == 0">
+                                <h2 class="d-flex">
+                                    Delivery scheduled for: {{order?.delivery_date | date:'fullDate'}}
+                                </h2>
+                            </div>
+                        </ion-item>
+                        <ion-item-divider>
+                            <ion-label></ion-label>
+                        </ion-item-divider>
+                    </div>
+                </ion-list>
+            </div>
+            <ion-item-divider>
+                <ion-label></ion-label>
+            </ion-item-divider>
+        </div>
+    </ion-list>
+
+
+
+</ion-content>
+<ion-footer class="ion-no-border">
+
+</ion-footer>

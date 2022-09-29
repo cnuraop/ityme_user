@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <!-- <ion-title>{{'register_now' | translate}}</ion-title> -->
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color">
+ <ion-slides>
+        <ion-slide>
+            <div class="slide">
+                <img src="../../assets/images/register.png" />
+            </div>
+        </ion-slide>
+
+    </ion-slides>
+<div class="banner">
+    <div class="form">        
+        <ion-list lines="none">            
+            <ion-item lines="none">
+                <div class="ite_inner d-flex">
+                    <ion-icon class="zmdi zmdi-account ion-text-start"></ion-icon>
+                    <!--                    <ion-label position="fixed">{{'user_name' | translate}}</ion-label>-->
+                    <ion-input type="text" [(ngModel)]="pincode" placeholder="Your pincode"></ion-input>
+                </div>
+            </ion-item>
+            <ion-button size="large" shape="block" class="btn" (click)="checkPincodeDelivery()">
+                {{'continue' | translate}}
+            </ion-button>
+        </ion-list>
+    </div>
+</div>
+
+</ion-content>

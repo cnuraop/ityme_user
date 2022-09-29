@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title></ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="container ion-text-center">
+        <div class="img_box">
+            <img src="assets/images/order_places.png">
+        </div>
+        <h1 *ngIf="(orderFailed)" [ngClass]="('red_h1')">
+            {{ ('order_failed') | translate}}
+        </h1>
+
+        <h1 *ngIf="(orderIsCod || payumoneyDone)" [ngClass]="(orderIsCod || payumoneyDone) ? 'green_h1' : 'red_h1'">
+            {{ ((orderIsCod || payumoneyDone) ? 'order_placed' : 'order_failed') | translate}}
+        </h1>
+
+        <p *ngIf="(orderIsCod || payumoneyDone)" [innerHTML]="( (orderIsCod || payumoneyDone) ? 'order_placed_msg' : 'order_failed_msg') | translate"> </p>
+        <p *ngIf="(orderFailed)" [innerHTML]="('order_failed_msg') | translate"> </p>
+    </div>
+</ion-content>
+<ion-footer class="ion-no-border">
+    <h2 *ngIf="(orderIsCod || payumoneyDone)" class="ion-text-center" (click)="navMyOrders()">
+        {{'my_orders' | translate}}
+    </h2>
+    <ion-button size="large" shape="full" class="btn" (click)="navHome()">
+        {{'continue_shopping' | translate}}
+    </ion-button>
+</ion-footer>

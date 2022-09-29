@@ -1,0 +1,13 @@
+Open app level build.gradle file
+Search for defaultConfig
+Copy and paste following in defaultConfig in android
+multiDexEnabled true
+
+Final result should look like following
+android {
+    defaultConfig {
+        // other configs..
+        multiDexEnabled true
+    }......
+
+Learn more: https://developer.android.com/studio/build/multidex

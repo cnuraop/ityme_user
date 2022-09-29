@@ -1,0 +1,90 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Express Cart - Select your mode of payment</ion-title>
+    </ion-toolbar>
+
+    <div class="amount_to_pay">
+        <h3>Order Total</h3>
+        <h2>{{currency_icon}}{{eComService.getCartTotal(true)}}</h2>
+        <h3>Jeevamrut Wallet Balance</h3>
+        <h2>{{currency_icon}}{{balance}}</h2>
+        <h3>Amount to Pay</h3>
+        <h2>{{currency_icon}}{{amountToBePaid}}</h2>
+    </div>
+</ion-header>
+<ion-content class="bg_color">
+    <!-- <ion-list lines="none">
+        <ion-radio-group  value="{{paymentMethoIdSelected}}" (ionChange)="onPaymentMethodSelected($event)">
+            <ion-item *ngFor="let pm of paymentMethods">
+                <div class="item_inner">
+                    <div class="payment_option d-flex">
+                        <h3 class="d-flex">
+                            <h3 *ngIf="amountToBePaid <=0">Hurray, I have enough balance in my Wallet.</h3>
+                             <h3 *ngIf="amountToBePaid >0">Opting to pay later, either through cash or wallet topup</h3>                            
+                        </h3>
+                        <ion-radio class="end" slot="start" value="{{pm.id}}"></ion-radio>
+                        </div>
+                </div>
+            </ion-item>
+        </ion-radio-group>      
+    </ion-list> -->
+    
+     <div class="payment_details">
+        <!-- <ion-item *ngIf="this.balance > 0">
+            <div class="item_inner">
+                <div class="payment_option d-flex">
+                    <h4> {{'use_wallet_balance' | translate}} </h4>
+                </div>
+            </div>
+            <ion-checkbox slot="start" name="useWallet" [(ngModel)]="useWallet" (ionChange)="checkboxClick($event)">
+            </ion-checkbox>
+        </ion-item> -->
+        <div class="payment_options">
+            <ion-item>
+                <div class="item_inner">
+                    <div class="payment_option d-flex">
+                        <h4> {{'payment_mode' | translate}} </h4>
+                    </div>
+                </div>
+            </ion-item>
+            <ion-radio-group name="payMode" [(ngModel)]="payMode" (ionChange)="radioGroupChange($event)">
+                <ion-item *ngIf="!this.payonline" >
+                    <ion-label *ngIf="this.amountToBePaidCopy > 0">{{'cod' | translate}}</ion-label>
+                    <ion-label *ngIf="this.amountToBePaidCopy == 0">{{'jeevamrut_Wallet' | translate}}</ion-label>
+                    <ion-radio slot="start" value="wallet"></ion-radio>
+                </ion-item>
+                  <ion-item>
+                    <ion-label>{{'online' | translate}} <br><span>(GPay, Net Banking, UPI, Credit/Debit Card)</span>
+                    </ion-label>
+                    <ion-radio slot="start" value="online"></ion-radio>
+                </ion-item>  
+            </ion-radio-group>
+
+          <ion-item *ngIf="this.amountToBePaidCopy > 0 && payMode=='online' && this.balance > 0">
+                <div class="item_inner">
+                    <div class="payment_option d-flex">
+                        <ion-label> {{'use_wallet_balance' | translate}} </ion-label>
+                    </div>
+                </div>
+                <ion-checkbox slot="start" name="useWallet" [(ngModel)]="useWallet" (ionChange)="checkboxClick($event)">
+                </ion-checkbox>
+            </ion-item> 
+        </div>
+    </div>
+   </ion-content>
+
+
+<ion-footer class="ion-no-border">
+    <!-- <ion-badge color="secondary"  *ngIf="amountToBePaid >0">We prefer you pay digitally by recharging your wallet !</ion-badge> -->
+                   
+    <p class="note" *ngIf="amountToBePaid >0">Please note for 'Pay On Delivery', Jeevamrut wallet gets deducted for same
+        amount which can be paid later at convinience in Wallet section or at delivery time.</p>
+
+    <ion-button size="large" shape="full" class="btn" (click)="placeOrder()">
+        Place Order
+        <ion-icon class="zmdi zmdi-chevron-right"></ion-icon>
+    </ion-button>
+</ion-footer>

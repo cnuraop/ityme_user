@@ -1,0 +1,40 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+		</ion-buttons>
+		<ion-title>{{'my_profile' | translate}}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color" fullscreen>
+	<div class="form">
+		<div class="img_container">
+			<div *ngIf="userMe && userMe.image_url" class="img_box center_img">
+				<img [src]="userMe.image_url" class="crop_img">
+			</div>
+			<div *ngIf="!userMe || !userMe.image_url" class="img_box center_img">
+				<img src="assets/images/empty_dp.png" class="crop_img">
+			</div>
+			<ion-icon class="zmdi zmdi-camera" (click)="pickImage()"></ion-icon>
+		</div>
+		<ion-list lines="none">
+			<ion-item lines="none">
+				<ion-label position="fixed">{{'user_name' | translate}}</ion-label>
+				<ion-input class="ion-text-end" [(ngModel)]="userMe.name"></ion-input>
+			</ion-item>
+			<ion-item lines="none">
+				<ion-label position="fixed">{{'email_address' | translate}}</ion-label>
+				<ion-input class="ion-text-end" [(ngModel)]="userMe.email"></ion-input>
+			</ion-item>
+			<ion-item lines="none">
+				<ion-label position="fixed">{{'phone_number' | translate}}</ion-label>
+				<ion-input class="ion-text-end" [(ngModel)]="userMe.mobile_number" disabled readonly></ion-input>
+			</ion-item>
+
+			<ion-button size="large" shape="block" class="btn" (click)="profilUpdate()">
+				{{'save' | translate}}
+			</ion-button>
+		</ion-list>
+	</div>
+</ion-content>

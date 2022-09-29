@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "207933413299",
+    "project_id": "ityme-4f997",
+    "storage_bucket": "ityme-4f997.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207933413299:android:a3134fd06e3fdba4739dc6",
+        "android_client_info": {
+          "package_name": "com.ityme.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "207933413299-t87b1a620csbkkjf47iguphl4tr8bn62.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ityme.app",
+            "certificate_hash": "574f19e29258dff4c43b6a0134bf93a130b42ea5"
+          }
+        },
+        {
+          "client_id": "207933413299-cmckftj38id0f8urub5tcujtmkb6tr7h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2A-ph0wQWR0-jVK7VuAy-mp3R0frm29E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "207933413299-cmckftj38id0f8urub5tcujtmkb6tr7h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,213 @@
+<ion-app [dir]="rtlSide">
+    <!-- <ion-split-pane contentId="main-content"> -->
+    <ion-menu *ngIf="showSideMenu" [side]="rtlSideMenu" contentId="main-content" type="overlay">
+        <ion-header>
+            <div>
+            <img src="/assets/images/logo_4.png" class="img_box" /> 
+        </div>                         
+            <div class="profile d-flex" (click)="viewProfile()">
+                <!-- <div *ngIf="this.userMe && this.userMe.image_url" class="img_box center_img">
+                        <img [src]="this.userMe.image_url" class="crop_img">
+                    </div> -->
+                <!-- <div *ngIf="!this.userMe || !this.userMe.image_url" class="img_box center_img">
+                        <img src="assets/images/empty_dp.png" class="crop_img">
+                    </div> -->
+
+                <div *ngIf="this.userMe" class="text_box">
+                    <h2>{{this.userMe.name}}</h2>
+                    <p>{{this.userMe.mobile_number}}</p>
+                    <p *ngIf="this.userMe && this.userMe.email != 'newuser@jeevamrut.in'">{{this.userMe.email}}</p>
+                    <!-- <p>{{'view_profile' | translate}}</p>             -->
+                </div>
+                <div *ngIf="!this.userMe" class="text_box">
+                    <h2>{{'hey_guest' | translate}}</h2>
+                    <p [innerHTML]="'alert_login_msg' | translate"></p>
+                </div>
+            </div>
+        </ion-header>
+        <ion-content fullscreen>
+            <img src="/assets/images/refer_friend.png" (click)="share()" class="img_box" />  
+            <ion-list lines="none">
+
+                <ion-menu-toggle auto-hide="false">
+                    <ion-item class="animate__animated animate__fadeInRight" *ngIf="!this.userMe"
+                        (click)="alertLogin()">
+                        <div class="item_inner d-flex">
+                            <div class="icon_box ion-text-start">
+                                <img src="assets/images/ic_menu_logoutact.png">
+                            </div>
+                            <h2>Login</h2>
+                        </div>
+                    </ion-item>
+                </ion-menu-toggle>
+                <ion-menu-toggle auto-hide="false">
+                    <ion-item class="animate__animated animate__fadeInRight" *ngIf="this.userMe" (click)="expressShop()">
+                        <div class="item_inner d-flex">
+                            <div class="icon_box ion-text-start">
+                                <img src="assets/images/farm_8.png">
+                            </div>
+                            <h2>Shop(Mandi)</h2>
+                        </div>
+                    </ion-item>
+                </ion-menu-toggle>
+                <ion-menu-toggle auto-hide="false">
+                    <ion-item class="animate__animated animate__fadeInRight" *ngIf="this.userMe" (click)="certificate()">
+                        <div class="item_inner d-flex">
+                            <div class="icon_box ion-text-start">
+                                <img src="assets/images/certification.png">
+                            </div>
+                            <h2>Authenticity</h2>
+                        </div>
+                    </ion-item>
+                </ion-menu-toggle>
+                <ion-menu-toggle auto-hide="false">
+                    <ion-item class="animate__animated animate__fadeInRight" *ngIf="this.userMe" (click)="myAddress()">
+                        <div class="item_inner d-flex">
+                            <div class="icon_box ion-text-start">
+                                <img src="assets/images/home.png">
+                            </div>
+                            <h2>{{'my_address' | translate}}</h2>
+                        </div>
+                    </ion-item>
+                </ion-menu-toggle>
+                <ion-menu-toggle auto-hide="false">
+                    <ion-item class="animate__animated animate__fadeInRight" *ngIf="this.userMe"
+                        (click)="viewProfile()">
+                        <div class="item_inner d-flex">
+                            <div class="icon_box ion-text-start">
+                                <img src="assets/images/farm.png">
+                            </div>
+                            <h2>My Profile</h2>
+                        </div>
+                    </ion-item>
+                </ion-menu-toggle>
+                <ion-menu-toggle auto-hide="false">
+                    <ion-item class="animate__animated animate__fadeInRight" *ngIf="this.userMe" (click)="orders()">
+                        <div class="item_inner d-flex">
+                            <div class="icon_box ion-text-start">
+                                <img src="assets/images/farm_3.png">
+                            </div>
+                            <h2>My Orders</h2>
+                        </div>
+                    </ion-item>
+                </ion-menu-toggle>
+                <ion-menu-toggle auto-hide="false">
+                    <ion-item class="animate__animated animate__fadeInRight" *ngIf="this.userMe" (click)="wallet()">
+                        <div class="item_inner d-flex">
+                            <div class="icon_box ion-text-start">
+                                <img src="assets/images/wallet.png">
+                            </div>
+                            <h2>Jeevamrut Wallet</h2>
+                        </div>
+                    </ion-item>
+                </ion-menu-toggle>
+<!--                <ion-menu-toggle auto-hide="false">-->
+<!--                    <ion-item class="animate__animated animate__fadeInRight" *ngIf="this.userMe" (click)="payments()">-->
+<!--                        <div class="item_inner d-flex">-->
+<!--                            <div class="icon_box ion-text-start">-->
+<!--                                <img src="assets/images/ic_menu_wallet.png">-->
+<!--                            </div>-->
+<!--                            <h2>My Payments</h2>-->
+<!--                        </div>-->
+<!--                    </ion-item>-->
+<!--                </ion-menu-toggle>-->
+                <ion-menu-toggle auto-hide="false">
+                    <ion-item class="animate__animated animate__fadeInRight" *ngIf="this.userMe" (click)="savedItems()">
+                        <div class="item_inner d-flex">
+                            <div class="icon_box ion-text-start">
+                                <img src="assets/images/ic_menu_favorites.png">
+                            </div>
+                            <h2>My Wishlist</h2>
+                        </div>
+                    </ion-item>
+                </ion-menu-toggle>
+
+<!--                <ion-menu-toggle auto-hide="false">-->
+
+<!--                    <ion-item class="animate__animated animate__fadeInRight" (click)="offers()">-->
+<!--                        <div class="item_inner d-flex">-->
+<!--                            <div class="icon_box ion-text-start">-->
+<!--                                <img src="assets/images/offer.png">-->
+<!--                            </div>-->
+<!--                            <h2>My Subscriptions</h2>-->
+<!--                        </div>-->
+<!--                    </ion-item>-->
+<!--                </ion-menu-toggle>-->
+                <ion-menu-toggle auto-hide="false">
+                    <ion-item class="animate__animated animate__fadeInRight" (click)="pillReminders()">
+                        <div class="item_inner d-flex">
+                            <div class="icon_box ion-text-start">
+                                <img src="assets/images/farm_2.png">
+                            </div>
+                            <h2>Order Reminders</h2>
+                        </div>
+                    </ion-item>
+                </ion-menu-toggle>
+
+                <ion-menu-toggle auto-hide="false">
+
+                    <ion-item class="animate__animated animate__fadeInRight" (click)="contactUs()">
+                        <div class="item_inner d-flex">
+                            <div class="icon_box ion-text-start">
+                                <img src="assets/images/feedback.png">
+                            </div>
+                            <h2>Feedback & Queries</h2>
+                        </div>
+                    </ion-item>
+                </ion-menu-toggle>
+                <ion-menu-toggle auto-hide="false">
+
+                    <ion-item class="animate__animated animate__fadeInRight" (click)="termsConditions()">
+                        <div class="item_inner d-flex">
+                            <div class="icon_box ion-text-start">
+                                <img src="assets/images/terms-and-conditions.png">
+                            </div>
+                            <h2>Terms of Use</h2>
+                        </div>
+                    </ion-item>
+                </ion-menu-toggle>
+                <ion-menu-toggle auto-hide="false">
+                    <ion-item class="animate__animated animate__fadeInRight" (click)="faqs()">
+                        <div class="item_inner d-flex">
+                            <div class="icon_box ion-text-start">
+                                <img src="assets/images/faq.png">
+                            </div>
+                            <h2>FAQ</h2>
+                        </div>
+                    </ion-item>
+                </ion-menu-toggle>
+                <ion-menu-toggle auto-hide="false">
+                    <ion-item class="animate__animated animate__fadeInRight" (click)="share()">
+                        <div class="item_inner d-flex">
+                            <div class="icon_box ion-text-start">
+                                <img src="assets/images/farm_4.png">
+                            </div>
+                            <h2>Share with Friends</h2>
+                        </div>
+                    </ion-item>
+                </ion-menu-toggle>
+                <ion-menu-toggle auto-hide="false">
+
+                    <ion-item class="animate__animated animate__fadeInRight" *ngIf="this.userMe" (click)="logout()">
+                        <div class="item_inner d-flex">
+                            <div class="icon_box ion-text-start">
+                                <img src="assets/images/ic_menu_logoutact.png">
+                            </div>
+                            <h2>Logout</h2>
+                        </div>
+                    </ion-item>
+                </ion-menu-toggle>
+            </ion-list>
+        </ion-content>
+
+        <ion-footer class="ion-no-border">
+            <div class="developed_by d-flex" (click)="developed_by()">
+                <h2>
+                    Know more about us here
+                </h2>
+            </div>
+        </ion-footer>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+    <!-- </ion-split-pane> -->
+</ion-app>

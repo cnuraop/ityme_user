@@ -1,0 +1,127 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>{{'account' | translate}}</ion-title>
+    </ion-toolbar>
+    <div class="profile d-flex" (click)="viewProfile()">
+        <div *ngIf="apiService.getUserMe() && apiService.getUserMe().image_url" class="img_box center_img">
+            <img [src]="apiService.getUserMe().image_url" class="crop_img">
+        </div>
+        <div *ngIf="!apiService.getUserMe() || !apiService.getUserMe().image_url" class="img_box center_img">
+            <img src="assets/images/empty_dp.png" class="crop_img">
+        </div>
+        <div *ngIf="apiService.getUserMe()" class="text_box">
+            <h2>{{apiService.getUserMe().name}}</h2>
+            <p>{{'view_profile' | translate}}</p>
+
+            <div *ngIf="config.demoMode" (click)="buyAppAction()" class="buy_this_app">
+    <h2>
+        <ion-icon class="zmdi zmdi-shopping-cart"></ion-icon>
+        {{"buy_this_app" | translate}}
+    </h2>
+</div>
+        </div>
+        <div *ngIf="!apiService.getUserMe()" class="text_box">
+            <h2>{{'hey_guest' | translate}}</h2>
+            <p [innerHTML]="'alert_login_msg' | translate"></p>
+            <div *ngIf="config.demoMode" (click)="buyAppAction()" class="buy_this_app">
+    <h2>
+        <ion-icon class="zmdi zmdi-shopping-cart"></ion-icon>
+        {{"buy_this_app" | translate}}
+    </h2>
+</div>
+        </div>
+    </div>
+</ion-header>
+
+<ion-content fullscreen class="bg_color">
+    <ion-row>
+        <ion-col size="6" (click)="wallet()">
+            <div class="menu_box">
+                <h2>{{'wallet' | translate}}</h2>
+                <h3 class="d-flex" [innerHTML]="'quick_payments' | translate"></h3>
+                <ion-icon class="zmdi zmdi-balance-wallet ion-text-end end"></ion-icon>
+            </div>
+        </ion-col>
+
+        <ion-col size="6" (click)="orders()">
+            <div class="menu_box">
+                <h2>{{'my_orders' | translate}}</h2>
+                <h3 class="d-flex" [innerHTML]="'order_status' | translate"> </h3>
+                <ion-icon class="zmdi zmdi-bike ion-text-end end"></ion-icon>
+            </div>
+        </ion-col>
+
+        <ion-col size="6" (click)="pillReminders()">
+            <div class="menu_box">
+                <h2>{{'pill_reminders' | translate}}</h2>
+                <h3 class="d-flex" [innerHTML]="'take_pill_on_time' | translate"> </h3>
+                <ion-icon class="zmdi zmdi-notifications-active ion-text-end end"></ion-icon>
+            </div>
+        </ion-col>
+
+        <ion-col size="6" (click)="myAddress()">
+            <div class="menu_box">
+                <h2>{{'my_address' | translate}}</h2>
+                <h3 class="d-flex" [innerHTML]="'save_address' | translate"></h3>
+                <ion-icon class="zmdi zmdi-pin ion-text-end end"></ion-icon>
+            </div>
+        </ion-col>
+
+        <ion-col size="6" (click)="savedItems()">
+            <div class="menu_box">
+                <h2>{{'saved_items' | translate}}</h2>
+                <h3 class="d-flex" [innerHTML]="'mades_doctors' | translate"> </h3>
+                <ion-icon class="zmdi zmdi-bookmark ion-text-end end"></ion-icon>
+            </div>
+        </ion-col>
+
+        <ion-col size="6" (click)="contactUs()">
+            <div class="menu_box">
+                <h2>{{'contact_us' | translate}}</h2>
+                <h3 class="d-flex" [innerHTML]="'let_us_help_you' | translate"></h3>
+                <ion-icon class="zmdi zmdi-email ion-text-end end"></ion-icon>
+            </div>
+        </ion-col>
+
+        <ion-col size="6" (click)="termsConditions()">
+            <div class="menu_box">
+                <h2>{{'terms_conditions' | translate}}</h2>
+                <h3 class="d-flex" [innerHTML]="'company_policies' | translate"></h3>
+                <ion-icon class="zmdi zmdi-assignment ion-text-end end"></ion-icon>
+            </div>
+        </ion-col>
+
+        <ion-col size="6" (click)="faqs()">
+            <div class="menu_box">
+                <h2>{{'faqs' | translate}}</h2>
+                <h3 class="d-flex" [innerHTML]="'quick_answers' | translate"> </h3>
+                <ion-icon class="zmdi zmdi-assignment-alert ion-text-end end"></ion-icon>
+            </div>
+        </ion-col>
+
+        <ion-col size="6" (click)="changeLanguage()">
+            <div class="menu_box">
+                <h2>{{'language' | translate}}</h2>
+                <h3 class="d-flex" [innerHTML]="'change_language' | translate"> </h3>
+                <ion-icon class="zmdi zmdi-globe ion-text-end end"></ion-icon>
+            </div>
+        </ion-col>
+
+        <ion-col size="6" *ngIf="apiService.getUserMe()" (click)="logout()">
+            <div class="menu_box">
+                <h2>{{'logout' | translate}}</h2>
+                <h3 class="d-flex" [innerHTML]="'see_again' | translate"></h3>
+                <ion-icon class="zmdi zmdi-open-in-new ion-text-end end"></ion-icon>
+            </div>
+        </ion-col>
+    </ion-row>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+    <div class="developed_by d-flex" (click)="developed_by()" *ngIf="config.demoMode">
+        <h2>{{"developed_by" | translate}}</h2>
+        <div class="img_box">
+            <img src="assets/images/VT_black_logo.png" class="">
+        </div>
+    </div>
+</ion-footer>

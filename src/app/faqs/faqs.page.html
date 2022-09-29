@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{'faqs' | translate}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color">
+    <div class="empty-view" *ngIf="!isLoading && (!faqs || !faqs.length)">
+        <div style="text-align:center">
+            <img src="assets/images/empty_address.png" alt="no offers" />
+            <span style="color:#9E9E9E; font-weight:bold; display: block;">{{"empty_faqs" | translate}}</span>
+        </div>
+    </div>
+    <ion-list lines="none">
+        <ion-item *ngFor="let faq of faqs" [ngClass]="faq.id == curFaqId ? 'active' : '' " (click)="expandFaq(faq)">
+            <div class="item_inner d-flex">
+<!--                <h2>1.&nbsp;</h2>-->
+                <div style="width: 100%">
+                    <h3>{{faq.title}}</h3>
+                    <div class="text_box">
+                        <p *ngIf="faq.id != curFaqId">{{faq.short_description}}</p>
+                        <p *ngIf="faq.id == curFaqId">{{faq.description}}</p>
+                    </div>
+                </div>
+            </div>
+        </ion-item>
+    </ion-list>
+</ion-content>

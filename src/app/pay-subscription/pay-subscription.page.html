@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title></ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    
+    <div class="container ion-text-center">
+        <div class="img_box">
+            <img src="assets/images/order_places.png">
+        </div>
+        <h1 *ngIf="(orderFailed)" [ngClass]="('red_h1')">
+            {{ ('subscription_placed_err') | translate}}
+        </h1>
+
+        <h1 *ngIf="(orderIsCod || payumoneyDone)" [ngClass]="(orderIsCod || payumoneyDone) ? 'green_h1' : 'red_h1'">
+            {{ ((orderIsCod || payumoneyDone) ? 'subscription_placed' : 'subscription_placed_err') | translate}}
+        </h1>
+    </div>
+</ion-content>
+<ion-footer class="ion-no-border">
+    <ion-button size="large" shape="full" class="btn" (click)="navHome()">
+        Time to enjoy benefits
+    </ion-button>
+</ion-footer>

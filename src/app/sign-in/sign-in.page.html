@@ -1,0 +1,68 @@
+<!-- <ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="bg_color">
+    <ion-slides direction="horizontal" pager="true" [options]="slideOpts">
+        <ion-slide>
+            <div class="slide">
+                <img src="assets/images/slide1.png" />
+            </div>
+        </ion-slide>
+
+        <ion-slide>
+            <img src="assets/images/slide2.png" />
+        </ion-slide>
+
+        <ion-slide>
+            <img src="assets/images/slide3.png" />
+        </ion-slide>
+    </ion-slides>
+    <div class="banner">
+        <!-- <div class="logo_box">
+            <img src="assets/images/logo.png">
+        </div>
+
+        <div class="banner_images">
+            <img src="assets/images/hero_image.png">
+        </div> -->
+        <div class="form">
+            <ion-list lines="none">
+                <!-- <ion-item lines="none">
+                    <div class="ite_inner d-flex">
+                        <ion-icon class="zmdi zmdi-globe-alt ion-text-start"></ion-icon>
+                        <ion-label mode="md" position="fixed">{{"select_country" | translate}}</ion-label>
+                        <ion-select mode="md" [(ngModel)]="countryCode" [value]="countryCode" multiple="false" [okText]="'okay' | translate"
+                            [cancelText]="'cancel' | translate" (ionChange)="changeHint()"
+                            placeholder="{{'select_country' | translate}}">
+                            <ion-select-option *ngFor="let country of countries" [value]="country.callingCodes[0]">
+                                {{country.name}}
+                            </ion-select-option>
+                        </ion-select>
+                    </div>
+                </ion-item> -->
+
+                <ion-item lines="none">
+                    <div class="ite_inner d-flex">
+                        <!--                        <ion-label position="fixed">{{phoneNumberHint}}</ion-label>-->
+                        <span>+91</span>
+                        <ion-input type="tel" [(ngModel)]="phoneNumber" (keyup.enter)="alertPhone()"
+                            placeholder="{{'enter_phone_number' | translate}}" maxlength="10" minlength="10">
+                        </ion-input>
+                    </div>
+                </ion-item>
+                <ion-button size="large" shape="block" class="btn" (click)="alertPhone()">
+                    {{'continue' | translate}}
+                </ion-button>
+            </ion-list>
+        </div>
+        <div class="terms-section">
+            <ion-label class="labelStyle">{{'i_accept'|translate}} <br></ion-label>
+            <span (click)="openTerms()">{{'terms-and-conditions'|translate}}</span>
+        </div>
+    </div>
+</ion-content>

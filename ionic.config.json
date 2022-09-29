@@ -1,0 +1,9 @@
+{
+  "name": "doctoWorld",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "e3415d98"
+}

@@ -1,0 +1,63 @@
+<ion-header>
+
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{'find_medicine' | translate}}</ion-title>
+    </ion-toolbar>
+
+    <div class="search_box d-flex">
+        <ion-icon class="zmdi zmdi-search ion-text-start"></ion-icon>
+        <ion-searchbar class="ion-no-padding" searchIcon="hide" debounce="1000" (ionChange)="onSearchbarChange($event)"
+            placeholder="{{'search_medicines' | translate}}"></ion-searchbar>
+    </div>
+
+</ion-header>
+
+<ion-content class="bg_color">
+    <ion-list *ngIf="searchHistory && searchHistory.length" lines="none">
+        <h2>{{'recent_search' | translate}}</h2>
+        <ion-item *ngFor="let sh of searchHistory" (click)="doSearch(sh)">
+            <h3>{{sh}}</h3>
+        </ion-item>
+    </ion-list>
+
+    <div *ngIf="!products || !products.length" class="placeholder_view ion-text-center">
+        <div class="img_box">
+            <img src="assets/images/placeholder_doctors.png">
+        </div>
+        <h2>{{'search_medicines' | translate}}</h2>
+    </div>
+
+    <div *ngIf="products && products.length" class="item_row">
+        <ion-row>
+            <ion-col *ngFor="let product of products" size="6">
+                <div class="item ion-text-center">
+                    <div class="item_content" (click)="navProDetail(product)">
+                        <div *ngIf="product.prescription_required" class="prescription_required">
+                            <img src="assets/images/px.png">
+                        </div>
+                        <div class="img_box">
+                            <img [src]="product.images[0]">
+                        </div>
+                        <h2>{{product.title}}</h2>
+                    </div>
+                    <div class="item_footer d-flex">
+                        <h3 class="ion-text-center">{{product.priceToShow}}</h3>
+                        <!-- <h4 class="ion-text-center end">
+                            <span (click)="addProCart(product)">
+                                {{'add_to_cart' | translate}}
+                            </span>
+                        </h4> -->
+                    </div>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-infinite-scroll (ionInfinite)="doInfiniteProducts($event)">
+            <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{'loading' | translate}}">
+            </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+    </div>
+
+</ion-content>

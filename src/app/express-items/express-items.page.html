@@ -1,0 +1,105 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start" mode="md">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+
+    <div class="store_details">
+        <h2> Our Natural Selection</h2>
+        <!--        <h4 class="d-flex">-->
+        <!--            <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>-->
+        <!--            Upcoming Delivery Slot: {{expressDeliverySettings.slot1 | date:'fullDate'}}-->
+        <!--        </h4>-->
+        <!--        <div class="d-flex">-->
+        <!--            <h4 class="d-flex">-->
+        <!--                <ion-icon class="zmdi zmdi-time ion-text-start"></ion-icon>-->
+        <!--                Order Before: {{expressDeliverySettings.order_end_date | date:'fullDate'}}-->
+        <!--                - {{expressDeliverySettings.order_end_time}}:00 hours-->
+        <!--            </h4>-->
+        <!--        </div>-->
+    </div>
+    <ion-item lines="none">
+        <div class="item_inner d-flex">
+            <ion-icon class="zmdi zmdi-search ion-text-start"></ion-icon>
+
+            <ion-select interface="popover" mode="md" [(ngModel)]="parentcategory_id"
+                        multiple="false" (ionChange)="OnCategoryChange($event)">
+                <ion-select-option *ngFor="let category of categories; let i = index" [value]="category.id">
+                    {{category.title}}
+                </ion-select-option>
+            </ion-select>
+        </div>
+    </ion-item>
+
+    <ion-segment mode="ios" [(ngModel)]="subcategory_id" scrollable (ionChange)="segmentChanged($event)">
+        <ion-segment-button mode="ios" *ngFor="let subCat of categoriesSub" [value]="subCat.id"
+                            (click)="loadProducts(subCat.id,0)">
+            <ion-label title="{{subCat.title}}">{{subCat.title}}</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+
+</ion-header>
+
+<ion-content fullscreen>
+    <ion-list lines="none" *ngFor="let product of products">
+        <ion-item class="animate__animated animate__fadeInRight">
+            <div class="item_inner d-flex">
+                <div class="img_box">
+                    <img [src]="product.mediaurls.images !=null && product.mediaurls.images[0].default"
+                         (click)="navProDetail(product)">
+                </div>
+                <div class="text_box">
+                    <h3>{{product.title}}</h3>
+                    <h4 *ngIf="product.sale_price > 0"
+                        style="color: #cf3c4f; text-decoration: line-through; padding-right: 10px">{{currency_icon}} {{product.price}} </h4>
+                    <h4 *ngIf="product.sale_price === null  || product.sale_price <= 0">{{currency_icon}} {{product.price}} </h4>
+                    <h4 *ngIf="product.sale_price > 0">{{currency_icon}}{{product.sale_price}} </h4>
+                    <h2>By {{product.vendor_products[0].vendor.name}}</h2>
+                    <div class="buttons d-flex">
+                        <h5>
+                            <ion-icon color="success" title="Add to wishlist" name="heart"
+                                      *ngIf="product.is_favourite" (click)="toggleFavorite(product)"></ion-icon>
+                            <ion-icon name="heart-outline" title="Add to wishlist" *ngIf="!product.is_favourite"
+                                      (click)="toggleFavorite(product)">
+                            </ion-icon>
+                        </h5>
+                        <h2 *ngIf="product.stock_quantity <= 0 "
+                            class="end out_of_stock"> {{"out_of_stock" | translate}}</h2>
+
+                        <p class="end" *ngIf="product.stock_quantity > 0 && quantityProCart(product)!=0">
+                            <span (click)="removeProCart(product)">-</span>
+                            <strong>{{quantityProCart(product)}}</strong>
+                            <span (click)="addProCart(product)">+</span>
+                        </p>
+                        <h6 *ngIf="product.stock_quantity > 0 && quantityProCart(product)==0" class="end">
+                            <span (click)="addProCart(product)"> {{'add' | translate}}</span>
+                        </h6>
+                    </div>
+                </div>
+
+            </div>
+        </ion-item>
+        <ion-label
+                *ngIf="!(currentDay == 2 || currentDay ==5) && product.delivery_type == '2DAYDELIVERY'; else dailyDelivery">
+            <ion-badge>Delivery: Wed & Sat Only</ion-badge>
+        </ion-label>
+        <ng-template #dailyDelivery>
+            <ion-badge>Delivery: Next Day</ion-badge>
+        </ng-template>
+    </ion-list>
+
+    <ion-infinite-scroll (ionInfinite)="doInfiniteProducts($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{'loading' | translate}}">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>
+<ion-footer class="ion-no-border">
+    <div class="cart_btn" (click)="navCart()">
+        <h2 class="d-flex">
+            <img src="assets/images/ic_cart_wt.png">&nbsp; &nbsp;
+            {{eComService.getCartItemsCount()}} items
+            <span class="end">View Express Items</span>
+        </h2>
+    </div>
+</ion-footer>

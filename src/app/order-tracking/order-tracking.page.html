@@ -1,0 +1,44 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{'order_track' | translate}} #{{delivery.order_id}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-color" fullscreen>
+    <div #map id="map" class="map">
+        <!-- <ion-spinner></ion-spinner> -->
+    </div>
+    <div #pleaseConnect id="please-connect">
+        <!-- <p>{{'loading' | translate}}</p> -->
+    </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+    <div class="delivery_man_info d-flex">
+        <div class="img_box center_img">
+            <img [src]="delivery.delivery.user.image_url" class="crop_img">
+        </div>
+        <div class="text_box">
+            <h2>{{delivery.delivery.user.name}}</h2>
+            <h3>{{'delivery_partner' | translate}}</h3>
+        </div>
+    </div>
+
+    <ion-row>
+        <ion-col size="6">
+            <ion-button size="large" shape="full" fill="clear" class="btn" (click)="doCall()">
+                <ion-icon class="zmdi zmdi-phone ion-text-start"></ion-icon>
+                {{'call' | translate}}
+            </ion-button>
+        </ion-col>
+        <ion-col size="6">
+            <ion-button size="large" shape="full" class="btn" (click)="navChat()">
+                <ion-icon class="zmdi zmdi-comment-alt-text ion-text-start"></ion-icon>
+                {{'chat' | translate}}
+            </ion-button>
+        </ion-col>
+    </ion-row>
+</ion-footer>

@@ -1,0 +1,175 @@
+ion-header {
+    .search_box {
+        background: var(--white);
+        width: calc(100% - 0px);
+        border-radius: 3px;
+        margin: 0 auto;
+        padding: 0 15px;
+        position: relative;
+        overflow: hidden;
+        min-height: 45px;
+        z-index: 99;
+
+        ion-icon {
+            color: var(--text-light);
+            font-size: 1.4rem;
+            min-width: 35px;
+            height: 35px;
+            line-height: 35px;
+            z-index: 99;
+            opacity: 0.5;
+
+            &.zmdi-tune {
+                font-size: 1.3rem;
+                left: unset;
+                right: 0;
+                z-index: 99;
+            }
+        }
+
+        ion-searchbar {
+            --background: var(--transparent) !important;
+            --color: var(--text-light2);
+            --placeholder-opacity: 1;
+            --placeholder-font-weight: 400 !important;
+            --box-shadow: none !important;
+        }
+    }
+}
+
+ion-list {
+    margin-top: 8px;
+    background: var(--white) !important;
+    padding: 0;
+    padding-bottom: 10px;
+    box-shadow: 0 10px 12px -9px rgba(0, 0, 0, 0.1);
+
+    h2 {
+        color: var(--text-light2);
+        margin: 0;
+        font-size: 0.85rem;
+        font-weight: 400;
+        padding: 15px 20px 13px 20px;
+    }
+
+    ion-item {
+        padding: 8px 0;
+        width: calc(100% - 42px);
+        margin: 0 auto;
+        min-height: unset !important;
+        --inner-padding-end: 0px;
+        --inner-min-height: unset !important;
+        --min-height: unset !important;
+        --padding-start: 0;
+
+        h3 {
+            margin: 0;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+    }
+}
+
+.item_row {
+    ion-row {
+        padding: 5.5px 5px;
+
+        ion-col {
+            padding: 5.5px 5px;
+
+            .item {
+                background: var(--white);
+                border-radius: 6px;
+                overflow: hidden;
+
+                .item_content {
+                    padding: 10px 0;
+
+                    position: relative;
+
+                    .img_box {
+                        width: 115px;
+                        height: 115px;
+                        margin: 0 auto;
+                        position: relative;
+                        margin-bottom: 12px;
+
+                        img {
+                            width: 86px;
+                            display: block;
+                            margin: auto;
+                            align-self: unsafe;
+                            position: absolute;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            top: 0;
+                        }
+                    }
+
+                    h2 {
+                        margin: 0;
+                        color: var(--text-dark);
+                        font-size: 0.9rem;
+                    }
+                }
+
+                .item_footer {
+                    border-top: 1px solid rgba(204, 204, 204, 0.48);
+
+                    h3 {
+                        margin: 0;
+                        font-size: 0.9rem;
+                        min-width: 100%;
+                        max-height: 100%;
+                        padding: 7px 10px;
+                    }
+
+                    h4 {
+                        min-width: 50%;
+                        max-height: 50%;
+                        color: var(--white);
+                        background: var(--primary);
+                        margin: 0;
+                        font-size: 0.78rem;
+                        height: 31px;
+                        line-height: 31px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.prescription_required {
+    position: absolute;
+    right: 12px;
+    z-index: 99;
+    top: 12px;
+    width: 18px;
+}
+
+.placeholder_view {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0%;
+    top: 28%;
+    margin: auto;
+    width: calc(100% - 50px);
+    padding: 0 20px;
+    height: fit-content;
+
+    .img_box {
+        width: 90px;
+        margin: 0 auto;
+        margin-bottom: 12px;
+    }
+
+    h2 {
+        color: var(--text-light2);
+        margin: 0;
+        font-size: 0.95rem;
+        opacity: 0.5;
+    }
+}

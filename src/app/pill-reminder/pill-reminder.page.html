@@ -1,0 +1,69 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{'create_pill_remibder' | translate}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <div class="form">
+        <ion-list lines="none">
+            <ion-card>
+                <h2>{{'pill_name' | translate}}</h2>
+                <ion-item lines="none">
+                    <ion-input class="ion-text-start" placeholder="{{'pill_name' | translate}}" [(ngModel)]="pillTitle">
+                    </ion-input>
+                </ion-item>
+            </ion-card>
+
+            <ion-card>
+                <h2>{{'select_days' | translate}}</h2>
+                <ion-item lines="none">
+                    <div class="item_inner d-flex">
+                        <ion-icon class="zmdi zmdi-calendar-alt ion-text-start"></ion-icon>
+                        <ion-label mode="md" position="fixed">{{"select_days" | translate}}</ion-label>
+                        <ion-select mode="md" placeholder="{{'select_days' | translate}}" [(ngModel)]="pillDay"
+                            multiple="false" [okText]="'okay' | translate" [cancelText]="'cancel' | translate">
+                            <ion-select-option value="mon">{{'mon' | translate}}</ion-select-option>
+                            <ion-select-option value="tue">{{'tue' | translate}}</ion-select-option>
+                            <ion-select-option value="wed">{{'wed' | translate}}</ion-select-option>
+                            <ion-select-option value="thu">{{'thu' | translate}}</ion-select-option>
+                            <ion-select-option value="fri">{{'fri' | translate}}</ion-select-option>
+                            <ion-select-option value="sat">{{'sat' | translate}}</ion-select-option>
+                            <ion-select-option value="sun">{{'sun' | translate}}</ion-select-option>
+                        </ion-select>
+                    </div>
+                </ion-item>
+            </ion-card>
+
+            <ion-card>
+                <h2>{{'select_time' | translate}}</h2>
+                <div class="item_box d-flex" *ngFor="let pillTime of pillTimes;let i = index" lines="none">
+                    <ion-item>
+                        <div class="item_inner d-flex">
+                            <ion-icon class="zmdi zmdi-notifications ion-text-start"></ion-icon>
+                            <ion-datetime mode="ios" displayFormat="HH:mm" [value]="pillTime.dateValue"
+                                [(ngModel)]="pillTime.dateIso">
+                            </ion-datetime>
+                        </div>
+                    </ion-item>
+                    <div class="add_time_box end" (click)="addRemoveTime(i)">
+                        <span *ngIf="i == 0">+</span>
+                        <span *ngIf="i != 0">-</span>
+                    </div>
+                </div>
+                <!-- <div class="add_time_box end" (click)="addTime()">
+                        <span>+</span>
+                    </div> -->
+            </ion-card>
+        </ion-list>
+    </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+    <ion-button size="large" shape="full" class="btn" (click)="confirmReminder()">
+        {{'set_reminder' | translate}}
+    </ion-button>
+</ion-footer>

@@ -1,0 +1,27 @@
+<ion-content>
+  <div class="cloes_btn ion-text-end" > 
+      <ion-icon name="close-outline" (click)="dismiss()"></ion-icon>
+  </div>
+
+  <ion-card>
+      <div class="img_box">
+          <img src="/assets/images/popup_img_head.png">
+      </div>
+
+      <div class="text_box">
+          <h2>Stay Connected</h2>
+          <p>Receive updates from your farmers, farms we associate with, <b>order details, and invoices</b></p>
+      </div>
+      <ion-list lines="none">
+
+          <ion-item lines="none">
+              <ion-input type="email" placeholder="Enter your email address"  [(ngModel)]="userMe.email"></ion-input>
+          </ion-item>
+
+          <ion-button size="large" shape="block" class="btn" (click)="onSubscribe()">
+              Save
+          </ion-button>
+
+      </ion-list>
+  </ion-card>
+</ion-content>

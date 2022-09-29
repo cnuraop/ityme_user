@@ -1,0 +1,61 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start" mode="md">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <!-- <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons> -->
+        <ion-title>{{'offers' | translate}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color">
+    <div class="empty-view" *ngIf="!isLoading && (!membershipPlans || !membershipPlans.length)">
+        <div style="text-align:center">
+            <img src="assets/images/empty_offers.png" alt="no subscriptions" />
+            <span style="color:#9E9E9E; font-weight:bold; display: block;">No Subscriptions</span>
+        </div>
+    </div>
+    <ion-list lines="none">
+        <ion-item *ngFor="let membershipPlan of membershipPlans" (click)="placeOrder(membershipPlan)">
+            <div class="item_box">
+                <div class="item_img">
+                    <img src="{{membershipPlan.image}}" class="width:500px;height:500px">
+                </div>
+                <div class="item_text ion-text-center">
+                    <h3>{{membershipPlan.title}}</h3>
+                    <h4>{{membershipPlan.detail}}</h4>
+                </div>
+                <ion-button size="large" shape="full" class="btn" (click)="placeOrder(membershipPlan)">{{text}}
+                </ion-button>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <ion-list lines="none">
+        <!-- <h2>{{'payment_modes' | translate}}</h2> -->
+        <ion-radio-group value="{{paymentMethoIdSelected}}" (ionChange)="onPaymentMethodSelected($event)">
+            <ion-item *ngFor="let pm of paymentMethods">
+                <div class="item_inner">
+                    <div class="payment_option d-flex">
+                        <h3 class="d-flex">{{pm.title}}</h3>
+                        <ion-radio class="end" slot="start" value="{{pm.id}}"></ion-radio>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-radio-group>
+    </ion-list>
+    <ion-list lines="none">
+        <ion-item *ngFor="let offer of offers" (click)="copyOffer(offer)">
+            <div class="item_inner d-flex">
+                <h3>{{offer.detail}}</h3>
+                <h4 class="end">{{offer.code}}</h4>
+            </div>
+        </ion-item>
+    </ion-list>
+
+</ion-content>
+<ion-footer class="ion-no-border">
+
+</ion-footer>

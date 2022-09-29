@@ -1,0 +1,58 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{'give_feedback' | translate}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="doctor_info d-flex">
+        <div class="img_box center_img">
+            <img [src]="doctor.user.image_url" class="crop_img">
+        </div>
+        <div class="text_box">
+            <h2>{{doctor.name}}</h2>
+            <h3>{{doctor.specializations_text}}</h3>
+        </div>
+    </div>
+
+
+
+    <div class="form">
+        <ion-list lines="none">
+            <ion-card>
+                <h2>{{'overall_experience_with_doctor' | translate}}</h2>
+                <div class="icon_box">
+                    <ion-icon [ngClass]="rateRequest.rating>=1 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star' " (click)="setRating(1)"></ion-icon>
+                    <ion-icon [ngClass]="rateRequest.rating>=2 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star' " (click)="setRating(2)"></ion-icon>
+                    <ion-icon [ngClass]="rateRequest.rating>=3 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star' " (click)="setRating(3)"></ion-icon>
+                    <ion-icon [ngClass]="rateRequest.rating>=4 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star' " (click)="setRating(4)"></ion-icon>
+                    <ion-icon [ngClass]="rateRequest.rating>=5 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star' " (click)="setRating(5)"></ion-icon>
+                </div>
+            </ion-card>
+
+
+            <ion-card *ngIf="rateReasonExists">
+                <h2>{{'visited_doctor_for' | translate}}</h2>
+                <ion-item lines="none">
+                    <ion-input class="ion-text-start" readonly [(ngModel)]="rateReason"></ion-input>
+                </ion-item>
+            </ion-card>
+
+            <ion-card>
+                <h2>{{'bref_your_experiece' | translate}}</h2>
+                <ion-item lines="none">
+                    <ion-textarea class="ion-text-start" rows="6" [(ngModel)]="rateRequest.review" maxlength="140" placeholder="{{'write_your_experience' | translate}}"></ion-textarea>
+                </ion-item>
+            </ion-card>
+        </ion-list>
+    </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+    <ion-button size="large" shape="full" class="btn" (click)="submitRating()">
+        {{'submit_feedback' | translate}}
+    </ion-button>
+</ion-footer>

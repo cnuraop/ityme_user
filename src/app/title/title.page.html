@@ -1,0 +1,83 @@
+<!--
+<ion-header>
+  <ion-toolbar>
+    <ion-title>title</ion-title>
+  </ion-toolbar>
+</ion-header>
+-->
+<ion-content (click)="dismiss()">
+
+</ion-content>
+<ion-footer no-border>
+    <div class="form">
+        <!-- <ion-icon class="zmdi zmdi-close ion-text-end" (click)="dismiss()"></ion-icon> -->
+
+        <ion-list lines="none">
+            <h1>{{'select_address_type' | translate}}</h1>
+            <ion-radio-group value="{{address.title}}" (ionChange)="onAddressTypeChange($event)">
+                <ion-row>
+                    <ion-col size="4">
+                        <ion-item lines="none">
+                            <ion-radio slot="start" value="home"></ion-radio>
+                            <ion-label class="d-flex">
+                                <div class="img_container">
+                                    <div class="img_box">
+                                        <ion-icon class="zmdi zmdi-home"></ion-icon>
+                                    </div>
+                                    <h2>{{'home' | translate}}</h2>
+                                </div>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-item lines="none">
+                            <ion-radio slot="start" value="office"></ion-radio>
+                            <ion-label class="d-flex">
+                                <div class="img_container">
+                                    <div class="img_box">
+                                        <ion-icon class="zmdi zmdi-city-alt"></ion-icon>
+                                    </div>
+                                    <h2>{{'office' | translate}}</h2>
+                                </div>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-item lines="none">
+                            <ion-radio slot="start" value="other"></ion-radio>
+                            <ion-label class="d-flex">
+                                <div class="img_container">
+                                    <div class="img_box">
+                                        <ion-icon class="zmdi zmdi-pin-assistant"></ion-icon>
+                                    </div>
+                                    <h2>{{'other' | translate}}</h2>
+                                </div>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                
+                <ion-item lines="none">
+                    <ion-label position="floating">{{'enter_address_detail1' | translate}}</ion-label>
+                    <ion-input type="text" [(ngModel)]="address.address1"></ion-input>
+                </ion-item>
+                <ion-item lines="none">
+                    <ion-label position="floating">{{'enter_address_detail2' | translate}}</ion-label>
+                    <ion-input type="text" [(ngModel)]="address.address2"></ion-input>
+                </ion-item>
+                
+                <ion-item lines="none">
+                    <ion-label position="floating">{{'enter_address_detail3' | translate}}</ion-label>
+                    <ion-input type="text" [(ngModel)]="address.city"></ion-input>
+                </ion-item>
+                <ion-item lines="none">
+                    <ion-label position="floating">{{'enter_pincode' | translate}}</ion-label>
+                    <ion-input type="text" [(ngModel)]="address.pincode"></ion-input>
+                </ion-item>
+            </ion-radio-group>
+        </ion-list>
+    </div>
+    <ion-button size="large" shape="full" class="btn" (click)="save()">
+        {{'save' | translate}}
+    </ion-button>
+</ion-footer>

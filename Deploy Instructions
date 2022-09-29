@@ -1,0 +1,63 @@
+ionic cordova platform add android 
+
+ionic cordova build --prod --release android
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore /Users/mohangudey/Downloads/Documents/release-key.keystore "/Users/mohangudey/Downloads/iTyme_App-2/iTYME-ionic5/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk" release-key
+
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore /Users/mohangudey/Downloads/Documents/release-key.keystore "/Users/mohangudey/Downloads/Projects/FE/itymeUser/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk" release-key
+
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore /Users/mohangudey/Downloads/Documents/release-key.keystore "/Users/mohangudey/Downloads/Projects/ItymeUser/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk" release-key
+
+~/Library/Android/sdk/build-tools/30.0.3/zipalign -v 4 "/Users/mohangudey/Downloads/Projects/ItymeUser/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk" "/Users/mohangudey/Downloads/Projects/ItymeUser/platforms/android/app/build/outputs/apk/release/app-release-signed.apk"
+
+
+~/Library/Android/sdk/build-tools/30.0.3/zipalign -v 4 "/Users/mohangudey/Downloads/Projects/FE/itymeUser/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk" "/Users/mohangudey/Downloads/Projects/FE/itymeUser/platforms/android/app/build/outputs/apk/release/app-release-signed.apk"
+
+
+~/Library/Android/sdk/build-tools/30.0.3/zipalign -v 4 "/Users/mohangudey/Downloads/iTyme_App-2/iTYME-ionic5/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk" "//Users/mohangudey/Downloads/iTyme_App-2/iTYME-ionic5/platforms/android/app/build/outputs/apk/release/app-release-signed.apk"
+
+
+keytool -genkey -keyalg RSA -alias partner-key -keystore partner-key.jks -storepass J33v@mru7 -validity 3650 -keysize 4096 -storetype pkcs12
+
+
+itymeSellerBackEnd-0.0.1-SNAPSHOT.jar
+
+
+
+sudo ./certbot-auto certonly -a standalone -d ec2-18-188-119-57.us-east-2.compute.amazonaws.com www.ec2-18-188-119-57.us-east-2.compute.amazonaws.com
+
+
+
+
+wget -O - 'http://mydns338957:jk9EoPnudHM@www.mydns.jp/login.html'
+
+openssl pkcs12 -export -in ~/.acme.sh/my.domain.jp/my.domain.jp.cer -inkey ~/.acme.sh/my.domain.jp/my.domain.jp.key -out ~/my.domain.jp.p12
+
+
+/etc/profile.d/env.sh
+export PATH=/home/ec2-user/jdk-11/bin:$PATH
+
+http://localhost:3001/#/app/asasas
+
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore stuff\ android/release-key.keystore platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk release-key
+~/Library/Android/sdk/build-tools/32.0.0/zipalign -v 4 platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk platforms/android/app/build/outputs/apk/release/app-release-signed.apk
+
+
+//Final Build Commands - 2021-12-20
+Change App Version
+Target SDK should be 30
+
+ionic cordova platform add android 
+ionic cordova build --prod --release android
+~/Library/Android/sdk/build-tools/32.0.0/zipalign -f 4 platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk platforms/android/app/build/outputs/apk/release/app-release-signed.apk
+~/Library/Android/sdk/build-tools/32.0.0/apksigner sign --ks release-key.keystore --ks-pass file:release-key.txt --v1-signing-enabled true --v2-signing-enabled true platforms/android/app/build/outputs/apk/release/app-release-signed.apk
+
+ionic cordova platform add ios 
+ionic cordova build --prod --release ios
+
+
+
+

@@ -1,0 +1,85 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            <div class="title_inner d-flex">
+                <span class="title_center" *ngIf="category">{{category.title}}</span>
+                <span class="title_center" *ngIf="!category">{{'products' | translate}}</span>
+                <span class="end cart_icon" (click)="navCart()">
+                    <ion-icon class="zmdi zmdi-shopping-cart ion-text-start"></ion-icon>
+                    <ion-badge>{{eComService.getCartItemsCount()}}</ion-badge>
+                </span>
+            </div>
+        </ion-title>
+       
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color">
+    <div class="empty-view" *ngIf="!isLoading && (!products || !products.length)">
+        <div style="text-align:center">
+            <img src="assets/images/empty_categories.png" alt="no offers" />
+            <span style="color:#9E9E9E; font-weight:bold;">
+                {{'empty_results' | translate}}
+            </span>
+        </div>
+    </div>
+    <div class="banner d-flex">
+        <div class="img_box center_img">
+            <img [src]="category.image" class="crop_img">
+        </div>
+        <div class="text_box">
+            <h4>{{category.details}}</h4>               
+        </div>        
+    </div>
+    <div class="item_row">
+        <ion-row>
+            <ion-col size="6" *ngFor="let product of products">
+                <div class="item ion-text-center ">
+                    <div class="item_content" (click)="navProDetail(product)">
+                        <div *ngIf="product.prescription_required" class="prescription_required">
+                            <img src="assets/images/px.png">
+                        </div>
+                        <div class="img_box"  style="position:relative;" >                            
+                            <img [src]="product.images[0]" style="float:left; margin-right: 5px;">
+                            <h2 *ngIf="product.stock_quantity <= 0 "  class="out_of_stock"> {{"out_of_stock" | translate}}</h2>
+                        </div>
+                        <h2>{{product.title}}</h2>
+                        <h2>{{product.vendor_products[0].vendor.name}}</h2>
+                    </div>
+                    <div class="item_footer d-flex">
+                        <h3 class="ion-text-center" *ngIf="product.sale_price > 0" style="color: #cf3c4f; text-decoration: line-through; padding-right: 10px" >{{product.priceToShow}} </h3>
+                        <h3 class="ion-text-center" *ngIf="product.sale_price === null">{{product.priceToShow}} </h3>
+                        <h3 class="ion-text-center" *ngIf="product.sale_price > 0">{{product.sale_priceToShow}} </h3>
+
+                        <div *ngIf="product.stock_quantity > 0"  class="add_item end">
+                            <h4 class="ion-text-center" *ngIf="quantityProCart(product)==0">
+                                <span (click)="addProCart(product)">
+                                    +
+                                </span>
+                            </h4>
+
+                            <h4 class="ion-text-center" *ngIf="quantityProCart(product)!=0">
+                                <span (click)="removeProCart(product)">
+                                    -
+                                </span>
+
+                                <strong class="ion-text-center">{{quantityProCart(product)}}</strong>
+
+                                <span (click)="addProCart(product)">
+                                    +
+                                </span>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-infinite-scroll (ionInfinite)="doInfiniteProducts($event)">
+            <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{'loading' | translate}}">
+            </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+    </div>
+</ion-content>

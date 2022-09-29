@@ -1,0 +1,51 @@
+.form {
+    padding-top: 15px;
+    margin-bottom: 65px;
+
+    h1 {
+        margin: 0;
+        font-weight: 600;
+        font-size: 1.85rem;
+        line-height: 31px;
+        margin-bottom: 15px;
+    }
+
+    h2 {
+        color: var(--text-light) !important;
+        margin: 0;
+        font-size: 1rem !important; 
+        letter-spacing: 0;
+        font-weight: 500;
+        line-height: 19px;
+        margin-bottom: 50px; 
+    }
+
+    
+    ion-list {
+        ion-item {
+            &.item-textarea {
+                .ite_inner {
+                    align-items: flex-start;
+
+                    ion-icon {
+                        position: relative;
+                        top: 15px;
+                    }
+
+                    ion-textarea {
+                        margin: 0 !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.footer_banner {
+    img {
+        display: block;
+        margin: auto;
+        width: 270px;
+    }
+}

@@ -1,0 +1,99 @@
+ion-header {
+    box-shadow: 0 -7px 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form {
+    ion-list {
+        ion-card {
+            border-radius: 0;
+            box-shadow: none;
+            margin: 0;
+            width: 100%;
+            padding-top: 30px;
+
+            h2 {
+                margin: 0;
+                color: #000;
+                font-size: 1rem;
+                padding-bottom: 23px;
+                font-weight: 500;
+            }
+
+            ion-item {
+                margin-bottom: 8px;
+                border-radius: 4px;
+                --min-height: unset !important;
+
+                ion-input {
+                    --padding-top: 10px !important;
+                    --padding-bottom: 10px !important;
+                    font-size: 1rem !important;
+                }
+
+                ion-label {
+                    display: none;
+                }
+
+                .item_inner {
+                    ion-icon {
+                        color: var(--primary);
+                        font-size: 1.3rem;
+                        min-width: 30px;
+                    }
+                }
+
+                &.item-select ion-select {
+                    padding-top: 10px !important;
+                    padding-bottom: 10px !important;
+                    font-size: 1rem !important;
+                }
+
+                &.item-datetime ion-datetime {
+                    padding-top: 10px !important;
+                    padding-bottom: 10px !important;
+                    font-size: 1rem !important;
+                }
+            }
+
+            .item_box {
+                width: 100%;
+                margin-bottom: 10px;
+
+                ion-item {
+                    margin-bottom: 0;
+                    margin-right: 10px;
+                }
+
+                .add_time_box {
+                    min-width: 44px;
+                    height: 44px;
+                    border-radius: 4px;
+                    text-align: center;
+                    line-height: 44px;
+                    position: relative;
+                    overflow: hidden;
+                    color: var(--primary);
+                    font-size: 2rem;
+                    font-weight: 500;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: var(--primary);
+                        opacity: 0.2;
+                    }
+
+                    span {
+                        position: relative;
+                        z-index: 99;
+                        top: -3px;
+                    }
+                }
+            }
+        }
+    }
+}

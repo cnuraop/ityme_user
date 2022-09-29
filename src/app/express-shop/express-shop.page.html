@@ -1,0 +1,259 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            <div class="title_inner d-flex">
+
+                <div class="location" (click)="pickLocation()">
+                    <span title="Change Delivery Address">
+                        <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                    </span>
+                </div>
+
+                <h2 (click)="pickLocation()" class="location_text">
+                    <span class="ion-text-wrap">{{getAddressToShow()}}</span>
+                </h2>
+
+                <!-- <h2 *ngIf="selectedLocation == null" (click)="pickLocation()" class="d-flex">
+                    <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                    <span>{{'select_location' | translate}}</span>
+                </h2> -->
+                <span class="end cart_icon" style="color:#397231" (click)="cart()">
+                    <ion-icon src="/assets/images/express_cart_icon.svg"></ion-icon>
+                    <!-- <ion-icon class="zmdi zmdi-shopping-cart ion-text-start"></ion-icon> -->
+                    <ion-badge>{{expressEComService.getCartItemsCount()}}</ion-badge>
+                </span>
+                <!-- <ion-chip (click)="cart()">
+                    <ion-avatar>
+                        <img src="/assets/images/cart.png">
+                    </ion-avatar>
+                    <ion-label>Express</ion-label>
+                </ion-chip> -->
+            </div>
+        </ion-title>
+    </ion-toolbar>
+
+    <!-- <ion-slides pager="true">
+       <div *ngIf="banners && banners.length" class="offres">
+            <ion-slide>
+                <div class="offer" *ngFor="let banner of banners" (click)="offers()">
+                    <img [src]="banner.image" class="crop_img">
+                </div>
+            </ion-slide>
+        </div>      
+    </ion-slides> -->
+
+
+    <div class="banner">
+        <div class="banner_text">
+            <p class="marquee"><span>
+                    {{getLatestNews()}}
+                </span></p>
+
+            <br />
+            <ion-text color="success">
+                <span class="traditionalFont" *ngIf="apiService.getUserMe() != null">{{'hello' | translate}},
+                    {{apiService.getUserMe().name}} !
+                </span>
+                <span class="traditionalFont" *ngIf="apiService.getUserMe() == null">{{'hello' | translate}}.</span>
+                <span class="traditionalFont">Welcome to Jeevamrut Naturals!</span>
+            </ion-text>
+        </div>
+
+        <div *ngIf="selectedLocation" class="search_box d-flex" (click)="navSearch()">
+            <ion-icon name="search-outline" class="ion-text-start"></ion-icon>
+            <h2>{{'search_medicines' | translate}}</h2>
+        </div>
+    </div>
+</ion-header>
+
+<ion-content fullscreen *ngIf="selectedLocation">
+    
+    <ion-item>
+        <span *ngIf="expressDeliverySettings != null">Next Delivery Slot: {{expressDeliverySettings.slot1 |
+            date:'fullDate'}}</span>
+    </ion-item>
+    <!-- <ion-item>
+        <ion-icon name="pin" slot="start"></ion-icon>
+        <span  *ngIf="expressDeliverySettings != null">Order before: {{expressDeliverySettings.order_end_date}}</span>
+       </ion-item>  -->
+
+    <!-- <ion-item>
+        <ion-icon name="pin" slot="start"></ion-icon>
+        <span style="color:red"  *ngIf="expressDeliverySettings != null">Order within: {{orderCutOffMessage}}</span>
+    </ion-item> -->
+
+    <!-- Temporary Commenting -->
+    <!-- <ion-item style="color:red" *ngIf="expressDeliverySettings != null">
+        <div id="clockdivExpress">
+            <div>Order within:
+                 <span class="days"></span>d
+                <span class="hours"></span>h
+                <span class="minutes"></span>m
+                <span class="seconds"></span>s
+            </div>
+        </div>
+    </ion-item> -->
+    
+    <div class="shop_by_category"
+        *ngIf="expressDeliverySettings != null && categories && categories.length && !haveNothingToShow()">
+        <h2 class="d-flex" (click)="viewAllSubCategories()">Express Shop<span class="end">{{'view_all' |
+                translate}}</span></h2>
+        <div class="scroll-x">
+            <div class="category" *ngFor="let cat of categories" (click)="expressSubCategories(cat)">
+                <div class="category_img center_img">
+                    <img [src]="cat.image" class="crop_img">
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--
+    <div class="d-flex" (click)="shop()">
+        <ion-badge color="warning"> Looking for larger selection?    
+        </ion-badge>
+    </div>
+-->
+    <!-- <div class="d-flex" (click)="shop()">
+        <ion-badge color="tertiary"> Our farmers harvest twice a week !!
+    
+        </ion-badge>
+    </div> -->
+<!--    <div class="d-flex" (click)="shop()">-->
+<!--        <ion-badge color="success">Click me to go to farmer market</ion-badge>-->
+<!--    </div>-->
+    
+    <img *ngIf="expressDeliverySettings == null" src="https://admin.ityme.in/storage/1740/Express-Delivery-final.jpg"
+        title="Express Delivery" />
+        <!-- <div class="banner"> 
+            <ion-slides *ngIf="banners && banners.length" #slider [options]="slideOpts" (ionSlidesDidLoad)="slidesDidLoad(slider)" pager="true" loop="true">
+                <ion-slide class="sliders" *ngFor="let banner of banners">
+                    <div (click)="offers(banner)">
+                        <img [src]="banner.image">
+                    </div>
+                </ion-slide>
+            </ion-slides>
+        </div> -->
+
+    <!-- <ion-card *ngIf="expressDeliverySettings != null">
+        <ion-card-header>
+            <ion-card-title>Our Express Delivery Schedule</ion-card-title>
+        </ion-card-header>
+        <ion-item class="animate__animated animate__fadeInRight">
+            <div id="next-delivery" style="display: block;">
+                <div class="img_box"><img src="assets/images/ic_transist.png" class="after"></div>
+            </div>
+            <div class="delivery-slot">
+                <ul>
+                    <li class="-available"> Sun</li>
+                    <li class="-available"> Mon</li>
+                    <li class="-available"> Tue</li>
+                    <li class="-available"> Wed</li>
+                    <li class="-available"> Thu</li>
+                    <li class="-available"> Fri</li>
+                    <li class="-available"> Sat</li>
+                </ul>
+
+            </div>
+        </ion-item>
+    </ion-card> -->
+
+    <!-- <div class="shop_by_category" *ngIf="categories && categories.length && !haveNothingToShow()">
+        
+        <h2 class="d-flex" (click)="viewAllSubCategories()">Our Natural Selection<span
+                class="end">{{'view_all' | translate}}</span></h2>
+                
+        <div class="scroll-x">
+            <div class="category" *ngFor="let cat of categories" (click)="subCategories(cat)">
+                <div class="category_img center_img">
+                    <img [src]="cat.image" class="crop_img">
+                </div>
+            </div>
+        </div>
+    </div> -->
+   
+    <div class="shop_by_category" *ngIf="expressDeliverySettings != null">
+        <h2 class="d-flex">Express Featured</h2>
+        <ion-list lines="none" *ngFor="let product of featured">
+            <ion-card class="ion-no-margin" (click)="navProDetail(product,$event)">
+                <ion-card-content>
+                    <ion-item class="animate__animated animate__fadeInRight">
+
+                        <div class="item_inner d-flex">
+                            <div class="img_box">
+                                <img [src]="product.mediaurls.images !=null && product.mediaurls.images[0].default">
+                            </div>
+                            <div class="text_box">
+                                <div>
+                                    <h3>{{product.title}}</h3>
+                                    <h4 *ngIf="product.sale_price > 0"
+                                        style="color: #cf3c4f; text-decoration: line-through; padding-right: 10px">
+                                        {{currency_icon}} {{product.price}} </h4>
+                                    <h4 *ngIf="product.sale_price === null || product.sale_price <= 0">{{currency_icon}}
+                                        {{product.price}} </h4>
+                                    <h4 *ngIf="product.sale_price > 0">{{currency_icon}} {{product.sale_price}} </h4>
+                                </div>
+                                <div class="buttons d-flex">
+                                    <h5>
+
+                                        <ion-icon color="success" title="Add to wishlist" name="heart"
+                                            *ngIf="product.is_favourite" (click)="toggleFavorite(product,$event)">
+                                        </ion-icon>
+                                        <ion-icon name="heart-outline" title="Add to wishlist"
+                                            *ngIf="!product.is_favourite" (click)="toggleFavorite(product,$event)">
+                                        </ion-icon>
+                                    </h5>
+                                    <p class="end" *ngIf="quantityProCart(product)!=0">
+                                        <span (click)="removeProCart(product,$event)">-</span>
+                                        <strong>{{quantityProCart(product)}}</strong>
+                                        <span (click)="addProCart(product,$event)">+</span>
+                                    </p>
+                                    <h6 *ngIf="quantityProCart(product)==0" class="end">
+                                        <span (click)="addProCart(product,$event)"> {{'add' | translate}}</span>
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-card-content>
+            </ion-card>
+        </ion-list>
+    </div>
+
+<!--    <ion-card class="deliverySchedule" *ngIf="expressDeliverySettings != null">-->
+<!--        <h5 class="d-flex heading">Our Express Delivery Schedule</h5>-->
+<!--        <ion-row class="mainDiv ">-->
+<!--            <ion-col>-->
+<!--                <p class="greenText" style="text-align: center;">Order By</p>-->
+<!--                <span class="active"> Everyday by {{this.expressDeliverySettings.order_end_time}}:00 hours</span> -->
+<!--            </ion-col>-->
+<!--            <ion-col>-->
+<!--                <img src="assets/images/delivery_boy.png" class="after">-->
+<!--            </ion-col>-->
+<!--            <ion-col>-->
+<!--                <p class="greenText">Delivery On</p><br>-->
+<!--                <span class="inactive"> &nbsp; Next Day &nbsp; </span>-->
+<!--            </ion-col>-->
+<!--        </ion-row>-->
+<!--    </ion-card>-->
+
+    <!-- <div class="empty-view" *ngIf="haveNothingToShow()">
+        <div style="text-align:center" (click)="pickLocation()">
+            <img src="assets/images/empty_categories.png" alt="no offers" />
+            <span *ngIf="selectedLocation" style="color:#9E9E9E; font-weight:bold;">
+                {{'empty_results' | translate}}
+            </span>
+            <span *ngIf="!selectedLocation" style="color:#9E9E9E; font-weight:bold;">
+                {{'Select_your_location_to_continue' | translate}}
+            </span>
+        </div>
+    </div> -->
+    
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+        <ion-fab-button title="Have any queries?" href="https://wa.me/+919573123971">
+            <ion-icon title="Have any queries?" name="logo-whatsapp"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>

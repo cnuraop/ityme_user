@@ -1,0 +1,318 @@
+// ion-header ion-toolbar {
+//     position: absolute;
+//     width: 100%;
+//     top: 0;
+//     left: 0;
+//     --background: none !important;
+// }
+
+.bg_color {
+    --background: var(--primary);
+}
+
+.banner {
+    // position: relative;
+    // overflow: hidden;
+    // width: 100%;
+    margin-top: 20px;
+    // margin-bottom: 20px;
+
+    // &::before {
+    //     content: "";
+    //     position: absolute;
+    //     top: 0;
+    //     left: 0;
+    //     width: 100%;
+    //     height: calc(100% - 155px);
+    //     background: var(--bg-secondary);
+    //     background-size: cover;
+    //     background-position: center;
+    //     background-repeat: no-repeat;
+    // }
+
+    .logo_box {
+        position: relative;
+        z-index: 99;
+        display: flex;
+        align-items: center;
+        height: 200px;
+
+        img {
+            width: 145px;
+            display: block;
+            margin: auto;
+        }
+    }
+
+    .welcome_text {
+        position: relative;
+        z-index: 99;
+        color: var(--white);
+        padding: 0 20px;
+        margin-bottom: 60px;
+
+        h2 {
+            margin: 0;
+            font-size: 1.35rem;
+            font-weight: 400;
+            margin-bottom: 13px;
+        }
+
+        h3 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+    }
+
+    .banner_images {
+        position: relative;
+
+        img {
+            display: block;
+            margin: 0 auto;
+            width: 300px;
+        }
+    }
+
+    .form ion-item {
+        background: var(--white);
+        //        padding: 2px 20px;
+        .countryCode {
+            margin-right: 12px;
+        }
+        &.item-input {
+            ion-label {
+                max-width: unset !important;
+                width: fit-content !important;
+                min-width: fit-content;
+            }
+        }
+        &.item-select {
+            padding: 2px 13px;
+            ion-label {
+                display: none;
+            }
+        }
+        span{
+            margin-right: 10px;
+            font-weight: 500;
+        }
+    }
+
+    .button.btn.button-block {
+        margin-top: 25px !important;
+    }
+}
+
+.quick_signin {
+    width: calc(100% - 40px);
+    margin: 0 auto;
+
+    h4 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+
+    ion-row {
+        margin: 0 -10px;
+
+        ion-col {
+            padding: 0 10px !important;
+        }
+    }
+
+    .button.btn {
+        font-size: 1rem !important;
+
+        img {
+            width: 18px;
+            position: relative;
+            left: -11px;
+        }
+    }
+}
+.terms-section {
+    text-align: center;
+    margin-top: 25px;
+
+    ion-label{
+        color: var(--white);
+    }
+
+    span{
+        font-weight: 600;
+        color: var(--white);
+        // text-decoration: underline;
+        z-index: 9999;
+        direction: initial;
+        margin-left: 5px;
+    }
+}
+
+.button.btn {
+    --background: var(--white);
+    color: var(--primary);
+    font-weight: 600;
+}
+// ion-header ion-toolbar {
+//     position: absolute;
+//     width: 100%;
+//     top: 0;
+//     left: 0;
+//     --background: none !important;
+// }
+
+.bg_color {
+    --background: var(--primary);
+}
+
+.banner {
+    // position: relative;
+    // overflow: hidden;
+    // width: 100%;
+    margin-top: 20px;
+    // margin-bottom: 20px;
+
+    // &::before {
+    //     content: "";
+    //     position: absolute;
+    //     top: 0;
+    //     left: 0;
+    //     width: 100%;
+    //     height: calc(100% - 155px);
+    //     background: var(--bg-secondary);
+    //     background-size: cover;
+    //     background-position: center;
+    //     background-repeat: no-repeat;
+    // }
+
+    .logo_box {
+        position: relative;
+        z-index: 99;
+        display: flex;
+        align-items: center;
+        height: 200px;
+
+        img {
+            width: 145px;
+            display: block;
+            margin: auto;
+        }
+    }
+
+    .welcome_text {
+        position: relative;
+        z-index: 99;
+        color: var(--white);
+        padding: 0 20px;
+        margin-bottom: 60px;
+
+        h2 {
+            margin: 0;
+            font-size: 1.35rem;
+            font-weight: 400;
+            margin-bottom: 13px;
+        }
+
+        h3 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+    }
+
+    .banner_images {
+        position: relative;
+
+        img {
+            display: block;
+            margin: 0 auto;
+            width: 300px;
+        }
+    }
+
+    .form ion-item {
+        background: var(--white);
+        //        padding: 2px 20px;
+        .countryCode {
+            margin-right: 12px;
+        }
+        &.item-input {
+            ion-label {
+                max-width: unset !important;
+                width: fit-content !important;
+                min-width: fit-content;
+            }
+        }
+        &.item-select {
+            padding: 2px 13px;
+            ion-label {
+                display: none;
+            }
+        }
+        span{
+            margin-right: 10px;
+            font-weight: 500;
+        }
+    }
+
+    .button.btn.button-block {
+        margin-top: 25px !important;
+    }
+}
+
+.quick_signin {
+    width: calc(100% - 40px);
+    margin: 0 auto;
+
+    h4 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+
+    ion-row {
+        margin: 0 -10px;
+
+        ion-col {
+            padding: 0 10px !important;
+        }
+    }
+
+    .button.btn {
+        font-size: 1rem !important;
+
+        img {
+            width: 18px;
+            position: relative;
+            left: -11px;
+        }
+    }
+}
+.terms-section {
+    text-align: center;
+    margin-top: 25px;
+
+    ion-label{
+        color: var(--white);
+    }
+
+    span{
+        font-weight: 600;
+        color: var(--white);
+        // text-decoration: underline;
+        z-index: 9999;
+        direction: initial;
+        margin-left: 5px;
+    }
+}
+
+.button.btn {
+    --background: var(--white);
+    color: var(--primary);
+    font-weight: 600;
+}

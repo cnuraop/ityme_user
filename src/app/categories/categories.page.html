@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            {{'shop_by_category' | translate}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="bg_color" fullscreen>
+    <div class="container_new d-flex">
+        <ion-segment mode="ios" [(ngModel)]="category_id" lines="none" scrollable (ionChange)="segmentChanged($event)">
+            <ion-segment-button mode="ios" *ngFor="let cat of categories" [value]="cat.id">
+                <div class="category_img center_img">
+                    <img [src]="cat.image" class="crop_img">
+                    <ion-icon class="zmdi zmdi-chevron-right" (click)="listProducts(cat)"></ion-icon>
+                </div>
+            </ion-segment-button>
+        </ion-segment>
+        <div class="tab_content end">
+            <div class="empty-view" *ngIf="!isLoading && (!categoriesSub || !categoriesSub.length)">
+                <div style="text-align:center">
+                    <img src="assets/images/empty_categories.png" alt="no offers" />
+                    <span>{{'empty_categories' | translate}}</span>
+                </div>
+            </div>
+            <ion-list lines="none">
+                <ion-item *ngFor="let cat of categoriesSub" (click)="listProducts(cat)">
+                    <div class="item_inner d-flex">
+                        <h2>{{cat.title}}</h2>
+                        <ion-icon class="zmdi zmdi-chevron-right ion-text-end end"></ion-icon>
+                    </div>
+                </ion-item>
+            </ion-list>
+        </div>
+    </div>
+</ion-content>

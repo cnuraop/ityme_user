@@ -1,0 +1,78 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <div class="banner">
+            <div class="banner_text">
+                <p class="marquee"><span>
+                        <ion-badge color="success">Experience a healthier and happier you. Home Delivery available. For
+                            any queries reach us at +91 95731 23971.</ion-badge>
+                        <!-- <ion-badge color="success">Limited Offer: Recharge more than 4000, and get 5% cashback in wallet. </ion-badge> -->
+                    </span></p>
+
+                <br />
+            </div>
+        </div>
+        <ion-title>
+            <div class="title_inner d-flex">
+                <span>{{'wallet' | translate}}</span>
+                <!-- <ion-icon class="zmdi zmdi-more-vert end ion-text-end"></ion-icon> -->
+            </div>
+
+        </ion-title>
+    </ion-toolbar>
+
+    <div class="banner">
+        <h2>{{'available_balance' | translate}}</h2>
+        <h1>{{currency_icon}} {{balance}}</h1>
+    </div>
+
+</ion-header>
+
+<ion-content class="bg_color" fullscreen>
+
+    <div class="empty-view" *ngIf="!isLoading && (!transactions || !transactions.length)">
+        <div style="text-align:center">
+            <img src="assets/images/plc_no_transaction.png" alt="no offers" />
+            <span style="color:#9E9E9E; font-weight:bold;">
+                {{'empty_transactions' | translate}}
+            </span>
+        </div>
+    </div>
+
+    <ion-list lines="none">
+        <h2 *ngIf="transactions && transactions.length">{{'recent' | translate}}</h2>
+        <ion-item *ngFor="let transaction of transactions">
+            <div class="item_inner">
+                <h3 class="d-flex">
+                    <div *ngIf="transaction.type == 'payout'">{{'sent_to_bank' | translate}}
+                    </div>
+                    <div *ngIf="transaction.type != 'payout'">{{transaction.meta.description}}
+                    </div>
+                    <!-- <span class="end">{{currency_icon}}{{transaction.amount}}</span> -->
+                    <span class="end" style="color: red;" *ngIf="transaction.type == 'withdraw'">
+                        - {{currency_icon}}{{transaction.amount}}</span>
+                    <span class="end" style="color: green;" *ngIf="transaction.type == 'deposit'">
+                        + {{currency_icon}}{{transaction.amount}}</span>
+                </h3>
+                <h4 class="d-flex">
+                    {{transaction.created_at}}
+
+                    <div class="end">
+                        <!-- <span>{{currency_icon}}{{transaction.amount}} |
+                            {{transaction.meta.source_payment_type}} |</span> -->
+                        <span>Previous Balance: {{transaction.current_balance}}</span>
+                    </div>
+                </h4>
+            </div>
+        </ion-item>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="doInfiniteTransactions($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{'loading' | translate}}">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>
+<ion-button size="large" shape="full" class="btn" (click)="navAddMoney()">{{'add_money' |
+    translate}}
+</ion-button>

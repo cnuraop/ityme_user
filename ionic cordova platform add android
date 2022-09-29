@@ -1,0 +1,33 @@
+ionic cordova platform add android 
+
+cordova build --prod --release android
+
+Run
+Go to folder .\platforms\android\ and execute:
+
+.\gradlew.bat bundleRelease
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore /Users/mohangudey/Downloads/Projects/ItymeUser/release-key.keystore "/Users/mohangudey/Downloads/Projects/ItymeUser/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk" release-key
+
+
+~/Library/Android/sdk/build-tools/30.0.3/zipalign -v 4 "/Users/mohangudey/Downloads/Projects/ItymeUser/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk" "/Users/mohangudey/Downloads/Projects/ItymeUser/platforms/android/app/build/outputs/apk/release/app-release-signed.apk"
+
+
+
+keytool -genkey -keyalg RSA -alias partner-key -keystore partner-key.jks -storepass J33v@mru7 -validity 3650 -keysize 4096 -storetype pkcs12
+
+
+sudo ./certbot-auto certonly -a standalone -d ec2-18-188-119-57.us-east-2.compute.amazonaws.com www.ec2-18-188-119-57.us-east-2.compute.amazonaws.com
+
+	
+
+
+wget -O - 'http://mydns338957:jk9EoPnudHM@www.mydns.jp/login.html'
+
+openssl pkcs12 -export -in ~/.acme.sh/my.domain.jp/my.domain.jp.cer -inkey ~/.acme.sh/my.domain.jp/my.domain.jp.key -out ~/my.domain.jp.p12
+
+
+/etc/profile.d/env.sh
+export PATH=/home/ec2-user/jdk-11/bin:$PATH
+
+http://localhost:3001/#/app/asasas

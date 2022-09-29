@@ -1,0 +1,49 @@
+.container {
+    padding: 20px 26px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 100%;
+    height: fit-content;
+
+    .img_box {
+        margin: 0 auto;
+        width: 275px;
+        margin-bottom: 95px;
+    }
+
+    h1 {
+        margin: 0;
+        font-weight: 400;
+        font-size: 1.15rem;
+        letter-spacing: 1.5px;
+        margin-bottom: 21px;
+    }
+
+    p {
+        margin: 0;
+        color: var(--text-light);
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        font-size: 1rem;
+    }
+
+    .green_h1 {
+        color: var(--primary);
+    }
+    .red_h1 {
+        color: var(--red_color);
+    }
+}
+
+ion-footer {
+    h2 {
+        margin: 0;
+        color: var(--primary);
+        font-size: 1.1rem;
+        padding: 19px 0;
+    }
+}

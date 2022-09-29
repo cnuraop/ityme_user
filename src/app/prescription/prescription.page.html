@@ -1,0 +1,28 @@
+<!--
+<ion-header>
+  <ion-toolbar>
+    <ion-title>prescription</ion-title>
+  </ion-toolbar>
+</ion-header>
+-->
+
+<ion-content>
+	<ion-card>
+		<div class="banner">
+			<div class="banner_img">
+				<img src="assets/images/prescription_banner_img.png">
+			</div>
+		</div>
+		<div class="card_ditails ion-text-center">
+			<h2>{{'prescription_require' | translate}}</h2>
+			<p [innerHTML]="'prescription_require_msg' | translate"> </p>
+
+			<ion-button size="large" shape="block" class="btn" (click)="pickPrescription()">
+				{{'upload_prescription' | translate}}
+			</ion-button>
+			<ion-button size="large" shape="block" class="btn" fill="clear" (click)="cancel()">
+				{{'cancel' | translate}}
+			</ion-button>
+		</div>
+	</ion-card>
+</ion-content>

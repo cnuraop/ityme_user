@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{'confirm_order' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color" fullscreen>
+  <ion-list lines="none">
+      <h2 class="d-flex">{{'delivery_at' | translate}}
+          <!-- <span class="end">{{'change' | translate}}</span> -->
+      </h2>
+
+      <!-- <ion-item class="delivery_at">
+          <div class="item_inner d-flex">
+              <div [ngSwitch]="selectedLocation.title" class="icon_box">
+                  <ion-icon class="zmdi zmdi-home" *ngSwitchDefault></ion-icon>
+                  <ion-icon class="zmdi zmdi-home" *ngSwitchCase="'home'"></ion-icon>
+                  <ion-icon class="zmdi zmdi-city-alt" *ngSwitchCase="'office'"></ion-icon>
+                  <ion-icon class="zmdi zmdi-pin-assistant" *ngSwitchCase="'other'"></ion-icon>
+              </div>
+              <div class="address">
+                  <h3>{{selectedLocation.title | translate}}</h3>
+                  <p>{{getAddressToShow(selectedLocation)}}</p>
+              </div>
+          </div>
+      </ion-item> -->
+      <ion-item class="delivery_at">
+          <ion-list lines="none">
+              <div class="item_inner d-flex">Name:
+                  <ion-input class="ion-text-end" [(ngModel)]="userMe.name"></ion-input>
+              </div>
+              <div class="item_inner d-flex">Email:
+                  <ion-input placeholder="Enter Email for Invoice" inputmode="email" type="email" class="ion-text-end" [(ngModel)]="userMe.email"></ion-input>
+              </div>
+              <div class="item_inner d-flex">Mobile:
+                  <ion-input  class="ion-text-end" [(ngModel)]="userMe.mobile_number" disabled readonly></ion-input>
+              </div>                
+          </ion-list>
+      </ion-item>
+
+      <h2 class="d-flex">{{'items_in_cart' | translate}}</h2>
+      <div class="item_list">
+          <ion-item *ngFor="let ci of eComService.getCartItems()">
+              <div class="item_inner">
+                  <h3 class="d-flex">{{ci.title}}
+                      <img *ngIf="ci.product.prescription_required" src="assets/images/px.png">
+                  </h3>
+                  <h4 class="d-flex">
+                      x {{ci.quantity}}
+                      <span class="end">{{currency_icon}}{{ci.getTotal(true)}}</span>
+                  </h4>
+              </div>
+          </ion-item>
+      </div>
+
+      <!-- <ion-item class="upload_prescription">
+          <div class="item_inner d-flex">
+              <div class="item_img">
+                  <img src="assets/images/px.png">
+              </div>
+              <h2 class="d-flex">
+                  {{'prescription_uploaded' | translate}}
+                  <span class="icon_box end">
+                      <ion-icon class="zmdi zmdi-delete ion-text-end"></ion-icon>
+                  </span>
+              </h2>
+          </div>
+      </ion-item> -->
+
+      <div class="payment_details">
+          <ion-item>
+              <div class="item_inner">
+                  <h3 class="d-flex"> {{'sub_total' | translate}} <span
+                          class="end">{{currency_icon}}{{eComService.getCartItemsTotal(true)}}</span></h3>
+              </div>
+          </ion-item>
+          <ion-item *ngFor="let ec of eComService.getExtraCharges()">
+              <div class="item_inner">
+                  <h3 class="d-flex"> {{ec.id | translate}} <span class="end">{{ec.priceToShow}}</span></h3>
+              </div>
+          </ion-item>
+          <ion-item class="amount_payable">
+              <div class="item_inner">
+                  <h3 class="d-flex"> {{'amount_payable' | translate}} <span
+                          class="end">{{currency_icon}}{{eComService.getCartTotal(true)}}</span></h3>
+              </div>
+          </ion-item>
+
+          <ion-item class="amount_payable">
+              <div class="item_inner">
+                  <h3 class="d-flex"> Delivery Date <span
+                          class="end">{{deliveryDay}}</span></h3>
+              </div>
+          </ion-item>
+      </div>
+  </ion-list>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-button size="large" shape="full" class="btn" (click)="select_paymet_method()">
+      {{'continue_to_pay' | translate}}
+  </ion-button>
+</ion-footer>

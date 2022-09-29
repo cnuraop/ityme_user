@@ -1,0 +1,62 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <!-- <ion-title>{{'register_now' | translate}}</ion-title> -->
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color">
+    
+    <ion-slides>
+        <ion-slide>
+            <div class="slide">
+                <img src="../../assets/images/register.png" />
+            </div>
+        </ion-slide>
+
+    </ion-slides>
+    <div class="banner">
+        
+    <div class="form">
+       
+
+        <ion-list lines="none">
+            <ion-item lines="none">
+                <div class="ite_inner d-flex">
+                    <ion-icon class="zmdi zmdi-account ion-text-start"></ion-icon>
+                    <!--                    <ion-label position="fixed">{{'user_name' | translate}}</ion-label>-->
+                    <ion-input type="text" [(ngModel)]="signUpRequest.name" placeholder="{{'user_name' | translate}}"></ion-input>
+                </div>
+            </ion-item>
+            <ion-item lines="none">
+                <div class="ite_inner d-flex">
+                    <ion-icon class="zmdi zmdi-account ion-text-start"></ion-icon>
+                    <!--                    <ion-label position="fixed">{{'user_name' | translate}}</ion-label>-->
+                    <ion-input type="text" [(ngModel)]="signUpRequest.pincode" placeholder="Your pincode"></ion-input>
+                </div>
+            </ion-item>
+            <ion-button size="large" shape="block" class="btn" (click)="requestSignUp()">
+                Join us
+            </ion-button>
+        </ion-list>
+        <h4 class="ion-text-center" (click)="goBack()">
+            {{'back_to_sign_in' | translate}}
+        </h4>
+        <div class="form">
+            <p class="ion-text-center">{{'will_send_an_otp_on_above' | translate}}
+                <br>{{'given_phone_number' | translate}}
+            </p>
+        </div>
+    </div>
+</div>
+
+</ion-content>
+
+<!-- <ion-footer class="ion-no-border">
+	<div class="form">
+		<p class="ion-text-center">{{'will_send_an_otp_on_above' | translate}} <br>{{'given_phone_number' | translate}}
+		</p>
+	</div>
+</ion-footer> -->

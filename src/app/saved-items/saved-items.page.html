@@ -1,0 +1,226 @@
+<ion-header>
+    <!-- <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{'saved_items' | translate}}</ion-title>
+    </ion-toolbar> -->
+    <ion-toolbar>
+        <ion-title>
+            <div class="title_inner d-flex">
+                
+                <ion-buttons slot="start">
+                    <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+                </ion-buttons>
+                <ion-title>My Wishlist</ion-title>
+                <span class="end cart_icon" (click)="cart()">
+                    <ion-icon class="zmdi zmdi-shopping-cart ion-text-start"></ion-icon>
+                    <ion-badge>{{eComService.getCartItemsCount()}}</ion-badge>
+                </span>
+            </div>
+        </ion-title>
+    </ion-toolbar>
+    <ion-segment mode="md" [(ngModel)]="tab" lines="none" (ionChange)="segmentChanged($event)">
+        <ion-segment-button mode="md" value="medicine">
+            <ion-label>
+                Add before they go out of stock
+            </ion-label>
+        </ion-segment-button>
+        <!-- <ion-segment-button mode="md" value="doctors">
+            <ion-label>
+                {{'doctors' | translate}}
+            </ion-label>
+        </ion-segment-button>
+        <ion-segment-button mode="md" value="hospitals">
+            <ion-label>
+                {{'hospitals' | translate}}
+            </ion-label>
+        </ion-segment-button> -->
+    </ion-segment>
+</ion-header>
+
+<ion-content class="bg_color">
+    <div class="empty-view" *ngIf="!isLoading && (!toShow || !toShow.length)">
+        <div style="text-align:center">
+            <img src="assets/images/empty_categories.png" alt="no offers" />
+            <span style="color:#9E9E9E; font-weight:bold;">
+                {{'empty_results' | translate}}
+            </span>
+        </div>
+    </div>
+    <div class="tab_container" [ngSwitch]="tab">
+
+        <!--		Medicine section start-->
+        <div class="medicine" *ngSwitchCase="'medicine'">
+            <!--
+            <ion-row>
+                <ion-col size="6" *ngFor="let product of products">
+                    <div class="item ion-text-center" (click)="navProDetail(product)">
+                        <div class="item_content">
+                            <div *ngIf="product.prescription_required" class="prescription_required">
+                                <img src="assets/images/px.png">
+                            </div>
+                            <div class="img_box">
+                                <img [src]="product.images[0]">
+                            </div>
+                            <h2>{{product.title}}</h2>
+                        </div>
+                        <div class="item_footer d-flex">
+                            <h3 class="ion-text-center">{{product.priceToShow}}</h3>
+                             <h4 class="ion-text-center end"><span> {{'add_to_cart' | translate}}</span></h4> 
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+-->
+            <ion-row>
+                <ion-col size="6" *ngFor="let product of products">
+                    <div class="item ion-text-center">
+                        <div class="item_content" (click)="navProDetail(product)">
+                            <div *ngIf="product.prescription_required" class="prescription_required">
+                                <img src="assets/images/px.png">
+                            </div>
+                            <div class="img_box">
+                                <img [src]="product.images[0]">
+                            </div>
+                            <h2>{{product.title}}</h2>
+                        </div>
+                        <div class="item_footer d-flex">
+                            <h3 class="ion-text-center">{{product.priceToShow}}</h3>
+
+                            <div class="add_item end">
+                                <h4 class="ion-text-center" *ngIf="quantityProCart(product)==0">
+                                    <span (click)="addProCart(product)">
+                                        +
+                                    </span>
+                                </h4>
+
+                                <h4 class="ion-text-center" *ngIf="quantityProCart(product)!=0">
+                                    <span (click)="removeProCart(product)">
+                                        -
+                                    </span>
+
+                                    <strong class="ion-text-center">{{quantityProCart(product)}}</strong>
+
+                                    <span (click)="addProCart(product)">
+                                        +
+                                    </span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div>
+
+        <!--		Medicine section end-->
+
+
+        <!--		Doctor section start-->
+
+        <div class="doctors_tab" *ngSwitchCase="'doctors'">
+            <ion-list lines="none">
+                <ion-item *ngFor="let doctor of doctors" (click)="navDocProfile(doctor)">
+                    <div class="item_inner d-flex">
+                        <div *ngIf="doctor.user && doctor.user.image_url" class="img_box center_img">
+                            <img [src]="doctor.user.image_url" class="crop_img">
+                        </div>
+
+                        <div *ngIf="!doctor.user || !doctor.user.image_url" class="img_box center_img">
+                            <img src="assets/images/empty_dp.png" class="crop_img">
+                        </div>
+
+                        <div class="text_box">
+                            <h2>{{doctor.name}}</h2>
+                            <h3>{{doctor.specializations_text}}
+                                <!-- <span>{{'at' | translate}}</span> {{doctor.address}} -->
+                            </h3>
+                            <ion-row>
+                                <ion-col size="4">
+                                    <h2>
+                                        {{'exp' | translate}}&nbsp;<strong>{{doctor.experience_years}}
+                                            {{'years' | translate}}</strong>
+                                    </h2>
+                                </ion-col>
+                                <ion-col size="3">
+                                    <h2>{{'fees' |
+                                        translate}}&nbsp;<strong>{{currencyIcon}}{{doctor.consultancy_fee}}</strong>
+                                    </h2>
+                                </ion-col>
+
+                                <ion-col size="5" class="d-flex">
+                                    <h2 class="end">
+                                        <ion-icon
+                                            [ngClass]="doctor.ratings>=1 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star' ">
+                                        </ion-icon>
+                                        <ion-icon
+                                            [ngClass]="doctor.ratings>=2 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star' ">
+                                        </ion-icon>
+                                        <ion-icon
+                                            [ngClass]="doctor.ratings>=3 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star' ">
+                                        </ion-icon>
+                                        <ion-icon
+                                            [ngClass]="doctor.ratings>=4 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star' ">
+                                        </ion-icon>
+                                        <ion-icon
+                                            [ngClass]="doctor.ratings>=5 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star' ">
+                                        </ion-icon>
+                                        &nbsp;
+                                        ({{doctor.ratings_count}})
+                                    </h2>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                    </div>
+                </ion-item>
+            </ion-list>
+        </div>
+        <!--		Doctor section end-->
+
+
+
+        <!--		Hospitals section start-->
+        <div class="hospitals_tab" *ngSwitchCase="'hospitals'">
+            <ion-list lines="none">
+                <ion-item *ngFor="let hospital of hospitals">
+                    <div class="item_inner">
+                        <div class="item_header">
+                            <ion-row (click)="navHospitalInfo(hospital)">
+                                <ion-col size='6'>
+                                    <h2>{{hospital.name}}</h2>
+                                    <h3>{{hospital.tagline}}</h3>
+                                </ion-col>
+                                <ion-col size='6'>
+                                    <div class="hospital_images" (click)="navHospitalInfo(hospital)">
+                                        <div *ngFor="let image of hospital.images" class="img_box center_img">
+                                            <img [src]="image" class="crop_img">
+                                        </div>
+                                    </div>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+
+                        <div class="item_footer">
+                            <h3 class="d-flex">
+                                <span class="address" (click)="navHospitalInfo(hospital)">
+                                    <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                                    {{hospital.address}}
+                                </span>
+                                <span class="end" (click)="dialHospital(hospital)">
+                                    <ion-icon class="zmdi zmdi-phone ion-text-start"></ion-icon>
+                                    {{'call_now' | translate}}
+                                </span>
+                            </h3>
+                        </div>
+                    </div>
+                </ion-item>
+            </ion-list>
+        </div>
+        <!--		Hospitals section end-->
+    </div>
+</ion-content>
+<ion-footer>
+<ion-button size="large" shape="full" class="btn" (click)="addSavedItemsToCart()">
+    Add all favorites to cart
+</ion-button>
+</ion-footer>

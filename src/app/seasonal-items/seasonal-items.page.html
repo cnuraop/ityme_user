@@ -1,0 +1,105 @@
+<ion-header>
+    <!-- <ion-toolbar>
+        <ion-buttons slot="start" mode="md">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Seasonal Items</ion-title>
+    </ion-toolbar> -->
+
+    <ion-toolbar>
+        <ion-buttons slot="start" mode="md">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <!-- <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons> -->
+        <ion-title>
+            <div class="title_inner d-flex">
+                <div class="location" (click)="pickLocation()">
+                    <span title="Change Delivery Address">
+                        <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                    </span>
+                </div>
+                <h2 (click)="pickLocation()" class="location_text">
+                    <span class="ion-text-wrap">{{getAddressToShow()}}</span>
+                </h2>
+                <span class="end cart_icon" style="color:#397231" (click)="cart()">
+                    <ion-icon class="zmdi zmdi-shopping-cart ion-text-start"></ion-icon>
+                    <ion-badge>{{expressComService.getCartItemsCount()}}</ion-badge>
+                </span>
+            </div>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <ion-list lines="none" *ngFor="let product of seasonalProducts;let i = index;">
+
+        <ion-card class="ion-no-margin"  (click)="navProDetail(product,$event)">
+            <ion-card-content>
+                <ion-item>
+                    <div class="item_inner d-flex">
+                        <div class="img_box">
+                            <img [src]="product.imageUrl">
+                        </div>
+
+                        <div class="text_box" >
+                            <h3>{{product.title}}</h3>
+                            <!-- <h4>{{currency_icon}} {{product.price}} </h4> -->
+                            <h4 *ngIf="product.sale_price > 0" style="color: #cf3c4f; text-decoration: line-through; padding-right: 10px" >{{currency_icon}} {{product.price}} </h4>
+                        <h4  *ngIf="product.sale_price === null  || product.sale_price <= 0">{{currency_icon}} {{product.price}} </h4>
+                        <h4  *ngIf="product.sale_price > 0">{{currency_icon}}{{product.sale_price}} </h4>
+                        
+
+                            <ion-row>
+                                <ion-col>
+                                    <ion-select #myselect interface="popover" multiple="false" [(ngModel)]="product.selected_week"
+                                        (ionChange)="OnCategoryChange($event,product)"  (click)="openSelect(myselect, $event)">
+                                        <ion-select-option *ngFor="let productmeta of product.meta; let i = index"
+                                            [value]="productmeta.id">
+                                            {{productmeta.week}}
+                                        </ion-select-option>
+                                    </ion-select>
+                                </ion-col>
+
+                                <ion-col>
+                                    <div class="buttons d-flex">
+                                        <span *ngIf="product.ratings_count > 0" (click)="navReviews(product, $event)">
+                                            <div class="icon_box ion-text-start" style="width: 25px;display: block;">
+                                                <img src="assets/images/icon_review.png">
+                                            </div>
+                                        </span>
+
+                                        <h2 *ngIf="product.stock_quantity <= 0 " class="end out_of_stock">
+                                            {{"sold-out" | translate}}</h2>
+                                        <p class="end"
+                                            *ngIf="product.stock_quantity > 0 && quantityProCart(product)!=0">
+                                            <span (click)="removeProCart(product, $event)">-</span>
+                                            <strong>{{quantityProCart(product)}}</strong>
+                                            <span (click)="addProCart(product, $event)">+</span>
+                                        </p>
+                                        <h6 *ngIf="product.stock_quantity > 0 && quantityProCart(product)==0"
+                                            class="end">
+                                            <span (click)="addProCart(product, $event)"> {{'add' | translate}}</span>
+                                        </h6>
+                                    </div>
+                                </ion-col>
+
+                            </ion-row>
+                        </div>
+                    </div>
+                </ion-item>
+            </ion-card-content>
+        </ion-card>
+    </ion-list>
+</ion-content>
+
+ <ion-footer class="ion-no-border">
+    <div class="cart_btn" (click)="navExpressCart()">
+        <h2 class="d-flex">
+            <img src="assets/images/ic_cart_wt.png">&nbsp; &nbsp;
+            {{expressComService.getCartItemsCount()}} items
+            <span class="end">View Items</span>
+        </h2>
+    </div>
+</ion-footer> 

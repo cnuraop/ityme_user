@@ -1,0 +1,190 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            <div class="title_inner d-flex">
+
+                <div class="location" (click)="pickLocation()">
+                    <span title="Change Delivery Address">
+                        <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                    </span>
+                </div>
+
+
+                <!-- <h2 *ngIf="selectedLocation == null" (click)="pickLocation()" class="d-flex">
+                    <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                    <span>{{'select_location' | translate}}</span>
+                </h2> -->
+                <h2 (click)="pickLocation()" class="location_text">
+                    <span class="ion-text-wrap">{{getAddressToShow()}}</span>
+                </h2>
+                <!--                <span class="end cart_icon" style="color:#397231" (click)="cart()">-->
+                <span class="end cart_icon" style="color:#397231" (click)="navExpressCart()">
+                    <ion-icon class="zmdi zmdi-shopping-cart ion-text-start"></ion-icon>
+                    <!--                    <ion-badge>{{eComService.getCartItemsCount()}}</ion-badge>-->
+                    <ion-badge>{{expressEComService.getCartItemsCount()}}</ion-badge>
+                </span>
+
+                <!-- <ion-chip  (click)="cart()">
+                        <ion-avatar>
+                          <img src="/assets/images/farm.png">
+                        </ion-avatar>
+                        <ion-label>Regular</ion-label>
+                      </ion-chip> -->
+
+            </div>
+
+        </ion-title>
+    </ion-toolbar>
+
+    <div class="banner">
+        <div class="banner_text">
+            <p class="marquee"><span>
+                   {{getLatestNews()}}
+                </span></p>
+
+            <br/>
+            <ion-text color="success">
+                <span class="traditionalFont" *ngIf="apiService.getUserMe() != null">{{'hello' | translate}},
+                    {{apiService.getUserMe().name}} !
+                </span>
+                <span class="traditionalFont" *ngIf="apiService.getUserMe() == null">{{'hello' | translate}}.</span>
+                <span class="traditionalFont">Welcome to Jeevamrut Naturals!</span>
+                <div (click)="shop()"> Click me to go to your farm market!</div>
+            </ion-text>
+        </div>
+    </div>
+</ion-header>
+
+<ion-content fullscreen>
+    <div style="width: 100%;padding: 5px 5px;background-color: white;margin-top: -3%;">
+        <ion-slides [options]="slideOpts" #slideone autoplay="1000" style="margin-top: 15px;margin-bottom: 5px;" pager="true">
+        <ion-slide *ngFor="let banner of banners">
+                    <img [src]="banner.image" style="border-radius: 10px;width: 94%;">
+        </ion-slide>
+        </ion-slides>        
+        <br>
+        </div>
+
+    <!-- <div class="banner">
+        <ion-slides *ngIf="banners && banners.length" #slider [options]="slideOpts"
+                    (ionSlidesDidLoad)="slidesDidLoad(slider)" pager="true" loop="true">
+            <ion-slide class="sliders" *ngFor="let banner of banners">
+                <div (click)="offers(banner)">
+                    <img [src]="banner.image">
+                </div>
+            </ion-slide>
+        </ion-slides>
+    </div> -->
+
+    <!-- <custom-slides [list]="list" [option]="option"></custom-slides>  -->
+    <!-- <img src="https://admin.ityme.in/storage/1/seasonal_banner.jpeg" class="seasonalCard" (click)="onClickSeasonal()" /> 
+     -->
+
+    <!-- <img src="https://admin.ityme.in/storage/1/ugadi_basket.png" class="seasonalCard" (click)="onClickSeasonal()" /> 
+     -->
+
+
+    <div class="customer_feedbacks" *ngIf="custfeedbacks && custfeedbacks.length">
+        <h2 class="d-flex">{{'customer_feedbacks' | translate}}</h2>
+        <div class="scroll-x">
+            <div class="offer center_img" *ngFor="let custfeedback of custfeedbacks">
+                <img [src]="custfeedback.image" class="crop_img">
+            </div>
+        </div>
+    </div>
+    <!-- asdf    <div>
+    <ion-slides [pager]="true" [options]="slideOpts">
+        <ion-slide *ngFor="let item of list">
+            <img [src]="item">
+        </ion-slide>
+    </ion-slides></div> -->
+
+    <!-- <ion-grid>
+        <ion-row>
+            <ion-col size="12" size-md="6" *ngFor="let item of list1">
+                <ion-card class="ion-no-margin">
+                    <ion-item lines="none" class="transparent ion-no-padding">
+                        <ion-avatar>
+                            <img [src]="item.avatar">
+                        </ion-avatar>
+                        <ion-label class="ion-padding-start">
+                            <h4><strong>{{item.author}}</strong></h4>
+                            <p>{{item.cate}}</p>
+                            <ion-chip color="danger">
+                                <ion-icon name="star" color="warning"></ion-icon>
+                                <p>Natural Food Lover</p>
+                            </ion-chip>
+                            <ion-chip color="warning">Eco Friendly</ion-chip>
+                        </ion-label>
+                    </ion-item>
+                    <ion-card-content class="ion-no-padding">
+                        <h4 *ngIf="item.title">{{item.title}}</h4>
+                        <p>{{item.content}}</p>
+                        <p class="ion-float-right">{{item.date}}</p>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid> -->
+
+    <div>
+        <ion-slides #feedback_slides [options]="feedback_slides" (ionSlidesDidLoad)="slidesDidLoad(feedback_slides)"
+                    pager="true" loop="true">
+            <ion-slide class="feedback" *ngFor="let item of list1">
+                <ion-card style="border-top:3px solid green" class="ion-no-margin">
+                    <ion-item lines="none" class="transparent ion-no-padding">
+                        <ion-avatar>
+                            <img [src]="item.avatar">
+                        </ion-avatar>
+                        <ion-label class="ion-padding-start">
+                            <h4><strong>{{item.author}}</strong></h4>
+                            <p>{{item.cate}}</p>
+                            <p class="ion-float-right">{{item.date}}</p>
+                            <ion-chip color="danger">
+                                <ion-icon name="star" color="warning"></ion-icon>
+                                <p>Natural Food Lover</p>
+                            </ion-chip>
+                            <!-- <ion-chip color="warning">Eco Friendly</ion-chip> -->
+                        </ion-label>
+                    </ion-item>
+                    <ion-card-content class="ion-no-padding">
+                        <h4 *ngIf="item.title">{{item.title}}</h4>
+                        <p>{{item.content}}</p>
+
+                    </ion-card-content>
+                </ion-card>
+            </ion-slide>
+        </ion-slides>
+    </div>
+
+
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+
+        <ion-fab-button color="warning">
+            <ion-icon name="chevron-up-circle-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="top">
+            <ion-fab-button href="https://www.facebook.com/search/top?q=jeevamrut%20foods" color="danger">
+                <ion-icon name="logo-facebook"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button href="https://www.instagram.com/jeevamrut.in/" color="danger">
+                <ion-icon name="logo-instagram"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button href="https://www.youtube.com/channel/UCuIORGn0G2Ajn54jGCYT5gw" color="danger">
+                <ion-icon name="logo-youtube"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button href="https://www.linkedin.com/company/jeevamrut/" color="danger">
+                <ion-icon name="logo-linkedin"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button href="http://mango.jeevamrut.in/certificates/" color="danger">
+                <ion-icon name="logo-firebase"></ion-icon>
+            </ion-fab-button>
+
+        </ion-fab-list>
+
+    </ion-fab>
+
+</ion-content>

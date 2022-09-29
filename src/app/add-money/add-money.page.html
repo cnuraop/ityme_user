@@ -1,0 +1,81 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{'add_money' | translate}}</ion-title>
+    </ion-toolbar>
+    <div class="form">
+        <ion-list lines="none">
+            <ion-item lines="none">
+                <div class="item_inner">
+                    <ion-label mode="md">{{"enter_amount_to_aad" | translate}}</ion-label>
+                    <ion-input mode="md" type="number" [(ngModel)]="amount" step="500"></ion-input>
+                </div>
+            </ion-item>
+        </ion-list>
+    </div>
+</ion-header>
+
+<ion-content class="bg_color">
+    <ion-list lines="none">
+        <!-- <h2>{{'payment_modes' | translate}}</h2> -->
+        <ion-radio-group value="{{paymentMethoIdSelected}}" (ionChange)="onPaymentMethodSelected($event)">
+            <ion-item *ngFor="let pm of paymentMethods">
+                <div class="item_inner">
+                    <div class="payment_option d-flex">
+                        <h3 class="d-flex">{{pm.title}}</h3>
+                        <ion-radio class="end" slot="start" value="{{pm.id}}"></ion-radio>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-radio-group>
+
+        <!-- <ion-item (click)="pay()">
+            <div class="item_inner">
+                <div class="payment_option d-flex">
+                    <div class="img_box center_img">
+                        <img src="assets/images/payment_cod.png" class="crop_img">
+                    </div>
+                    <h3>Cash on Delivery</h3>
+                </div>
+            </div>
+        </ion-item>
+        <ion-item (click)="pay()">
+            <div class="item_inner">
+                <div class="payment_option d-flex">
+                    <div class="img_box center_img">
+                        <img src="assets/images/payment_paypal.png" class="crop_img">
+                    </div>
+                    <h3>PayPal</h3>
+                </div>
+            </div>
+        </ion-item>
+        <ion-item (click)="pay()">
+            <div class="item_inner">
+                <div class="payment_option d-flex">
+                    <div class="img_box center_img">
+                        <img src="assets/images/payment_payu.png" class="crop_img">
+                    </div>
+                    <h3>PayU Money</h3>
+                </div>
+            </div>
+        </ion-item>
+        <ion-item (click)="pay()">
+            <div class="item_inner">
+                <div class="payment_option d-flex">
+                    <div class="img_box center_img">
+                        <img src="assets/images/payment_stripe.png" class="crop_img">
+                    </div>
+                    <h3>Stripe</h3>
+                </div>
+            </div>
+        </ion-item> -->
+    </ion-list>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+    <ion-button size="large" shape="full" class="btn" (click)="initAdd()">
+        {{'continue' | translate}}
+    </ion-button>
+</ion-footer>

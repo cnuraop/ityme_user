@@ -1,0 +1,153 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>{{'account' | translate}}</ion-title>
+    </ion-toolbar>
+    <div class="profile d-flex" (click)="viewProfile()">
+        <!-- <div *ngIf="apiService.getUserMe() && apiService.getUserMe().image_url" class="img_box center_img">
+            <img [src]="apiService.getUserMe().image_url" class="crop_img">
+        </div> -->
+        <!-- <div *ngIf="!apiService.getUserMe() || !apiService.getUserMe().image_url" class="img_box center_img">
+            <img src="assets/images/empty_dp.png" class="crop_img">
+        </div> -->
+        <div *ngIf="apiService.getUserMe()" class="text_box">
+            <h2>{{apiService.getUserMe().name}}</h2>
+            <p>{{apiService.getUserMe().mobile_number}}</p>
+            <p>{{apiService.getUserMe().email}}</p>
+            
+           <!-- <p>{{'view_profile' | translate}}</p>             -->
+        </div>
+        <div *ngIf="!apiService.getUserMe()" class="text_box">
+            <h2>{{'hey_guest' | translate}}</h2>
+            <p [innerHTML]="'alert_login_msg' | translate"></p>
+        </div>
+    </div>
+</ion-header>
+
+<ion-content fullscreen class="bg_color">
+
+    <ion-list lines="none">
+
+        <ion-item class="animate__animated animate__fadeInRight"  *ngIf="!apiService.getUserMe()" (click)="alertLogin()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_logoutact.png">
+                </div>
+                <h2>Login</h2>
+            </div>
+        </ion-item>
+
+        <ion-item class="animate__animated animate__fadeInRight" *ngIf="apiService.getUserMe()" (click)="myAddress()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_addressact.png">
+                </div>
+                <h2>{{'my_address' | translate}}</h2>
+            </div>
+        </ion-item>
+
+        <ion-item class="animate__animated animate__fadeInRight" *ngIf="apiService.getUserMe()" (click)="viewProfile()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_favorites.png">
+                </div>
+                <h2>My Profile</h2>
+            </div>
+        </ion-item>
+
+        <ion-item class="animate__animated animate__fadeInRight" *ngIf="apiService.getUserMe()" (click)="savedItems()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_tncact.png">
+                </div>
+                <h2>My Wishlist</h2>
+            </div>
+        </ion-item>
+
+        <ion-item class="animate__animated animate__fadeInRight"  (click)="offers()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_setting.png">
+                </div>
+                <h2>Subscriptions</h2>
+            </div>
+        </ion-item>
+
+        <ion-item class="animate__animated animate__fadeInRight" (click)="pillReminders()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_faq.png">
+                </div>
+                <h2>Order Reminders</h2>
+            </div>
+        </ion-item>
+
+        <ion-item class="animate__animated animate__fadeInRight" *ngIf="apiService.getUserMe()" (click)="wallet()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_wallet.png">
+                </div>
+                <h2>Wallet</h2>
+            </div>
+        </ion-item>
+
+        <ion-item class="animate__animated animate__fadeInRight" (click)="contactUs()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_feedback.png">
+                </div>
+                <h2>Feedback & Queries</h2>
+            </div>
+        </ion-item>
+
+        <ion-item class="animate__animated animate__fadeInRight" (click)="termsConditions()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_tncact.png">
+                </div>
+                <h2>Terms of Use</h2>
+            </div>
+        </ion-item>
+
+        <ion-item class="animate__animated animate__fadeInRight" (click)="faqs()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_supportact.png">
+                </div>
+                <h2>FAQ</h2>
+            </div>
+        </ion-item>
+
+        <ion-item class="animate__animated animate__fadeInRight"  (click)="share()" >
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_share.png">
+                </div>
+                <h2>Share your health secret 
+            </h2> 
+            </div>
+        </ion-item>
+
+        <ion-item class="animate__animated animate__fadeInRight"  *ngIf="apiService.getUserMe()" (click)="logout()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_logoutact.png">
+                </div>
+                <h2>Logout</h2>
+            </div>
+        </ion-item>
+</ion-list>
+
+        
+</ion-content>
+
+<ion-footer class="ion-no-border">
+    <div class="developed_by d-flex" (click)="developed_by()">
+        <div class="img_box">
+            <img src="assets/images/logo2.png" class="light-theme-logo">
+        </div>
+        <h2>
+           Know more about us here - Jeevamrut
+    </h2>
+    
+    </div>
+</ion-footer>

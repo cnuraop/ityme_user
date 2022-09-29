@@ -1,0 +1,126 @@
+ion-header ion-toolbar ion-title {
+	position: absolute !important;
+	left: 0;
+	top: 0;
+	width: 100%;
+	text-align: center;
+	padding: 0 15px !important;
+}
+
+.formVerify {
+	padding-top: 50px;
+    display: block;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto;
+    width: calc(100% - 40px);
+
+	p {
+		color: var(--text-light) !important;
+		margin: 0;
+		font-size: 1rem !important;
+		letter-spacing: 0;
+		font-weight: 500;
+		line-height: 19px;
+		margin-bottom: 50px;
+		opacity: 0.8;
+	}
+
+	.button.btn.button-block {
+		margin-top: 50px;
+	}
+
+	ion-list {
+		margin-bottom: 28px;
+	}
+
+	h4 {
+		margin: 0;
+		font-size: 0.95rem;
+		font-weight: 500;
+		span {
+			text-transform: uppercase;
+			font-size: 0.95rem;
+		}
+	}
+}
+.otpDiv {
+	margin-bottom: 20px;
+	--border-width: 0 0 0px 0;
+	--padding-start: 0;
+	--padding-end: 0;
+	--inner-padding-end: 0;
+	border-radius: 10px;
+	overflow: hidden;
+	&.error {
+		ion-input {
+			border-color: #e20613;
+		}
+	}
+	&.item-has-focus {
+		--highlight-background: none;
+		// .native-input {
+		//     background: white;
+		// }
+	}
+	ion-input {
+		font-family: var(--font-semi);
+		color: var(--secondary-color);
+		--placeholder-color: #000000;
+		--placeholder-opacity: 0.5;
+		border-radius: 14px;
+		height: 50px;
+		border: 0;
+		background: #f5f5f5;
+		input {
+			padding: 10px;
+		}
+		&.otp-input {
+			margin-right: 10px;
+			height: 50px;
+			width: 36px;
+			text-align: center;
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+.resend-wrap-main {
+	margin-bottom: 30px;
+	p {
+		margin-bottom: 10px;
+		margin-bottom: 10px;
+	}
+
+	.resend-otp-wrap {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		margin-bottom: 10px;
+	}
+	.resend-timer-text {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+	}
+	.resend {
+		margin-right: 10px;
+		span {
+			color: #fe8900;
+			text-decoration: underline;
+		}
+	}
+	.timer {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		.icon-time-slot {
+			color: #000000;
+			font-size: 24px;
+			position: relative;
+			margin-right: 5px;
+		}
+	}
+}

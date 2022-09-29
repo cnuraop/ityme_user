@@ -1,0 +1,412 @@
+ion-header {
+    ion-segment {
+        border: none !important;
+        background: none !important;
+        margin: 0;
+
+        ion-segment-button {
+            background: none !important;
+            position: relative;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-light2) !important;
+            text-transform: unset !important;
+            letter-spacing: 0;
+            --color-checked: var(--primary) !important;
+            text-align: justify !important;
+            --background-checked: var(--transparent) !important;
+            --border-width: 0 !important;
+            --border-radius: 0 !important;
+            box-shadow: none !important;
+            --padding-start: 0px;
+            --padding-end: 0px;
+
+            ion-label {
+                opacity: 1;
+                margin: 15px 0 15px 0;
+            }
+
+            &.segment-button-checked {
+                ion-label {
+                    color: var(--primary) !important;
+                }
+            }
+        }
+    }
+}
+
+.medicine {
+    .prescription_required {
+        position: absolute;
+        right: 12px;
+        z-index: 99;
+        top: 12px;
+        width: 18px;
+    }
+
+    ion-row {
+        padding: 6px 6px;
+
+        ion-col {
+            padding: 7px 8px;
+
+            .item {
+                background: var(--white);
+                border-radius: 10px;
+                overflow: hidden;
+                text-align: unset !important;
+
+                .item_content {
+                    padding: 10px 10px;
+                    position: relative;
+                    padding-bottom: 0px;
+
+                    .img_box {
+                        width: 115px;
+                        height: 115px;
+                        margin: 0 auto;
+                        position: relative;
+                        margin-bottom: 12px;
+
+                        img {
+                            width: 98px;
+                            display: block;
+                            margin: auto;
+                            position: absolute;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            top: 0;
+
+                        }
+                    }
+
+                    h2 {
+                        margin: 0;
+                        color: var(--text-dark);
+                        font-size: 0.9rem;
+                        overflow: hidden;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 1;
+                        -webkit-box-orient: vertical;
+                        //                        min-height: 33.6px; 
+                    }
+                }
+
+                .item_footer {
+                    align-items: flex-end;
+
+                    h3 {
+                        margin: 0;
+                        font-size: .8rem;
+                        text-align: justify !important;
+                        padding: 0px !important;
+                        font-weight: 600;
+                        padding-bottom: 3px !important;
+                        width: fit-content;
+                        margin: 0 10px;
+                        max-width: calc(100% - 71px);
+                        padding-bottom: 9px !important;
+                    }
+
+                    .add_item {
+                        position: relative;
+                        height: 34px;
+                        min-width: 61px;
+                        max-width: 61px;
+
+                        h4 {
+                            color: var(--white);
+                            background: var(--primary);
+                            margin: 0;
+                            font-size: 1.8rem;
+                            line-height: 31px;
+                            border-radius: 10px 0;
+                            display: flex;
+                            align-items: center;
+                            padding: 0px 8px;
+                            position: absolute;
+                            right: -1000%;
+                            transition: all 0.3s;
+                            bottom: 0;
+
+                            strong {
+                                display: block;
+                                min-width: 29px;
+                                font-size: .95rem;
+                            }
+
+                            span {
+                                line-height: 30px;
+                                position: relative;
+                                top: 0px;
+                                font-size: 1rem;
+                            }
+
+                            &:nth-child(odd) {
+                                right: 0;
+
+                                span {
+                                    font-size: 1.8rem;
+                                    top: -2px;
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+
+                &.active {
+                    .item_footer {
+                        .add_item {
+                            h4 {
+                                &:nth-child(odd) {
+                                    right: -1000%;
+                                }
+
+                                &:nth-child(even) {
+                                    right: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.doctors_tab {
+    ion-list {
+        background: var(--transparent) !important;
+        margin: 0;
+        padding: 0;
+        padding-top: 8px;
+
+        ion-item {
+            padding: 16px 15px 20px 15px;
+            background: var(--white);
+            --inner-padding-end: 0px;
+            --inner-min-height: unset !important;
+            --padding-start: 0;
+            --highligh-color-focused: var(--transparent) !important;
+            margin-bottom: 8px;
+
+            .item_inner {
+                width: 100%;
+                align-items: flex-end;
+
+                .img_box {
+                    min-width: 68px;
+                    height: 77px;
+                    margin-right: 15px;
+                    border-radius: 6px;
+                }
+
+                .text_box {
+                    width: 100%;
+                    overflow: hidden;
+                    padding-top: 6px;
+
+                    h2 {
+                        margin: 0;
+                        font-size: 0.95rem;
+                        font-weight: 600;
+                        padding-bottom: 4px;
+                        color: var(--text-dark);
+                    }
+
+                    h3 {
+                        margin: 0;
+                        color: var(--text-light);
+                        font-size: 0.8rem;
+                        overflow: hidden;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 2;
+                        -webkit-box-orient: vertical;
+                        min-height: 30.4px;
+
+                        span {
+                            font-size: 0.73rem;
+                            font-weight: 400;
+                            color: var(--text-light2);
+                        }
+                    }
+
+                    ion-row {
+                        margin: 0 -5px;
+
+                        ion-col {
+                            padding: 0 5px;
+
+                            h2 {
+                                margin: 0;
+                                font-size: 0.73rem;
+                                font-weight: 400;
+                                color: var(--text-light2);
+                                display: flex;
+                                align-content: center;
+                                padding: 0;
+                                align-content: center;
+
+                                strong {
+                                    color: #000;
+                                    font-weight: 500;
+                                }
+
+                                ion-icon {
+                                    color: #dddddd;
+                                    font-size: 0.8rem;
+
+                                    &.active {
+                                        color: var(--yelow_color);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.hospitals_tab {
+    ion-list {
+        background: var(--transparent) !important;
+        margin: 0;
+        padding: 0;
+        padding-top: 8px;
+
+        ion-item {
+            padding: 12px 0;
+            background: var(--white);
+            --inner-padding-end: 0px;
+            --inner-min-height: unset !important;
+            --padding-start: 0;
+            --highligh-color-focused: var(--transparent) !important;
+            margin-bottom: 8px;
+
+            .item_inner {
+                width: 100%;
+                overflow: hidden;
+
+                .item_header {
+                    padding-left: 16px;
+
+                    ion-row {
+                        ion-col {
+                            padding: 0;
+
+                            h2 {
+                                margin: 0;
+                                font-size: 0.95rem;
+                                font-weight: 600;
+                                padding-bottom: 4px;
+                                color: var(--text-dark);
+                            }
+
+                            h3 {
+                                margin: 0;
+                                color: var(--text-light);
+                                font-size: 0.8rem;
+                                overflow: hidden;
+                            }
+
+                            .hospital_images {
+                                width: 100%;
+                                overflow-x: scroll;
+                                white-space: nowrap;
+                                height: auto;
+
+                                .img_box {
+                                    width: 72px;
+                                    height: 42px;
+                                    margin: 0px 2px;
+                                    display: inline-block;
+                                    border-radius: 5px;
+
+                                    &:first-child {
+                                        margin-left: 0px;
+                                    }
+
+                                    &:last-child {
+                                        margin-right: 16px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .item_footer {
+                    padding: 10px 16px 0px 16px;
+
+                    h3 {
+                        margin: 0;
+                        color: var(--text-light);
+                        font-size: 0.7rem;
+                        font-weight: 400;
+                        letter-spacing: 0.3px;
+
+                        span {
+
+
+                            &.address {
+                                max-width: calc(100% - 100px);
+                                display: flex;
+                                align-items: center;
+
+                                ion-icon {
+                                    min-width: 15px;
+                                }
+                            }
+
+                            &.end {
+                                color: var(--primary);
+                                display: flex;
+                                align-items: center;
+                                font-size: 0.75rem;
+                                font-weight: 400;
+
+                                ion-icon {
+                                    min-width: 21px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.empty-view {
+    width: 200px;
+    margin: auto;
+    height: 200px;
+    top: 10%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10%;
+
+    img {
+        width: 100px;
+        margin: auto;
+    }
+
+    span {
+        display: block;
+        text-align: center;
+    }
+
+    button {
+        margin-top: 50px;
+
+        span {
+            display: unset !important;
+        }
+    }
+}

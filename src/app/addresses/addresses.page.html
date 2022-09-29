@@ -1,0 +1,68 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{'my_address' | translate}}</ion-title>
+    </ion-toolbar>
+    <!-- <ion-item color="success">
+        <ion-label class="ion-text-wrap">
+            <h4>Please add your location or click on on existing location to set your default delivery address. Only if
+                you have your address will we be able show you health sellers around you.
+            </h4>
+        </ion-label>
+    </ion-item> -->
+</ion-header>
+
+
+<ion-content class="bg_color">
+    <div class="empty-view" *ngIf="!isLoading && (!addresses || !addresses.length)">
+        <div style="text-align:center">
+            <img src="assets/images/empty_address.png" alt="no offers" />
+            <span style="color:#9E9E9E; font-weight:bold; display: block;">{{"empty_addresses" | translate}}</span>
+        </div>
+    </div>
+    <div class="form">
+        <h3 *ngIf="addresses && addresses.length">{{'tap-to-select-address' | translate}}</h3>
+
+        <ion-list lines="none">
+            <ion-radio-group value="{{addressIdSelected}}" (ionChange)="onAddressSelected($event)">
+                <ion-item *ngFor="let address of addresses" lines="none">
+                    <ion-radio slot="start" value="{{address.id}}"></ion-radio>
+                    <ion-label class="d-flex">
+                        <div [ngSwitch]="address.title" class="icon_box">
+                            <ion-icon class="zmdi zmdi-home" *ngSwitchDefault></ion-icon>
+                            <ion-icon class="zmdi zmdi-home" *ngSwitchCase="'home'"></ion-icon>
+                            <ion-icon class="zmdi zmdi-city-alt" *ngSwitchCase="'office'"></ion-icon>
+                            <ion-icon class="zmdi zmdi-pin-assistant" *ngSwitchCase="'other'"></ion-icon>
+                        </div>
+
+                        <div class="text_box">
+                            <h2>{{address.title | translate}}</h2>
+                            <p>{{getAddressToShow(address)}}</p>
+                        </div>                        
+                    </ion-label>
+                </ion-item>
+            </ion-radio-group>
+        </ion-list>
+    </div>
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+        <ion-fab-button  (click)="navAddressNew()">
+            <ion-icon title="Add new address" name="add-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>
+
+<!-- <ion-footer class="ion-no-border">
+    <ion-button size="large" shape="full" class="btn" (click)="navAddressNew()">
+        <ion-icon class="zmdi zmdi-plus"></ion-icon> &nbsp;
+        {{'add_new_location' | translate}}
+    </ion-button>
+</ion-footer> -->
+<ion-footer class="ion-no-border">
+    <ion-button size="large" shape="full" class="btn" 
+    (click)="onClickSelectAddrs()" [ngClass]="{'disabled': addressIdSelected==-1}">
+        <!-- <ion-icon class="zmdi zmdi-plus"></ion-icon> &nbsp; -->
+        {{'select-proceed' | translate}}
+    </ion-button>
+</ion-footer>

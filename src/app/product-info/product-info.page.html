@@ -1,0 +1,281 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            <div class="title_inner d-flex">
+                <h3 [ngClass]="product.is_favourite ? 'end active' : 'end'" (click)="toggleFavorite()">
+                    <ion-icon class="zmdi zmdi-bookmark-outline"></ion-icon>
+                    <ion-icon class="zmdi zmdi-bookmark"></ion-icon>
+                </h3>
+                <span class="cart_icon" style="color:#397231" (click)="home()">
+                    <ion-icon class="zmdi zmdi-home ion-text-start"></ion-icon>
+                </span>
+<!--                <span class="cart_icon"  (click)="navCart()">-->
+<!--                    <ion-icon class="zmdi zmdi-shopping-cart ion-text-start"></ion-icon>-->
+<!--                    <ion-badge *ngIf="eComService.getCartItemsCount()">{{eComService.getCartItemsCount()}}</ion-badge>-->
+<!--                </span>-->
+                <span class=" cart_icon" style="color:#397231" (click)="navExpressCart()">
+                    <ion-icon src="/assets/images/express_cart_icon.svg"></ion-icon>
+                    <!-- <ion-icon class="zmdi zmdi-shopping-cart ion-text-start"></ion-icon> -->
+                    <ion-badge>{{expressEComService.getCartItemsCount()}}</ion-badge>
+                </span>
+            </div>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color">
+    <ion-card>
+        <ion-card-content>
+            <div class="banner">
+                <div *ngIf="product.prescription_required" class="prescription_required">
+                    <img src="assets/images/px.png">
+                </div>
+                <div *ngIf="product.images" class="banner_img">
+                    <img [src]="product.images[0]" (click)="bigImage(product.images[0])">
+                    <h2 *ngIf="product.stock_quantity <= 0 " class="out_of_stock"> {{"out_of_stock" | translate}}</h2>
+                </div>
+                <div class="banner_details">
+                    <h2 class="item_title d-flex">
+                        {{product.title}}
+                        <span class="end">
+                            <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                            {{product.ratings}}
+                        </span>
+                    </h2>
+                    <h3 class="d-flex">
+                        <span class="category">{{category.title}}</span>
+                        <span *ngIf="product.ratings_count > 0" class="end" (click)="navReviews()">
+                            {{'read_all' | translate}} {{product.ratings_count}} {{'reviews' | translate}}
+                            <ion-icon class="zmdi zmdi-chevron-right ion-text-end"></ion-icon>
+                        </span>
+                    </h3>
+                    <div class="item_inner d-flex">
+                        <h2 class="week" *ngIf="product.week!=null">{{product.week}}</h2>
+
+                        <h2 class="ion-text-center" *ngIf="product.sale_price > 0"
+                            style="color: #cf3c4f; text-decoration: line-through; padding-right: 10px">
+                            {{product.priceToShow}}
+                        </h2>
+                        <h2 class="ion-text-center" *ngIf="product.sale_price === null || product.sale_price <= 0">
+                            {{product.priceToShow}} </h2>
+                        <h2 class="ion-text-center" *ngIf="product.sale_price > 0">{{product.sale_priceToShow}} </h2>
+
+                        <!-- <ion-select [(ngModel)]="gaming" class="end" interface="popover" mode="ios">
+                    <ion-select-option value="1">500gm Pack</ion-select-option>
+                    <ion-select-option value="2">200gm Pack</ion-select-option>
+                    <ion-select-option value="3">100gm Pack</ion-select-option>
+                </ion-select>
+                
+                <ion-icon class="zmdi zmdi-chevron-down ion-text-end"></ion-icon> -->
+
+                        <h2 style="text-align:right; color: #f00; position: absolute; right: 0;"
+                            *ngIf="product.stock_quantity <= 0">{{'out_of_stock' | translate}}</h2>
+                    </div>
+                </div>
+            </div>
+        </ion-card-content>
+    </ion-card>
+
+    <div class="tab_content">
+        <!--About section start> -->
+        <div>
+            <ion-card>
+                <ion-card-content>
+                    <div class="description">
+                        <div class="text_box">
+                            <h2>{{'description' | translate}}</h2>
+                            <p>{{product.detail}}</p>
+                        </div>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+
+            <ion-card>
+                <ion-card-content>
+                    <div *ngFor="let vp of product.vendor_products" class="seller_details"
+                        (click)="navVendorProfile(vp.vendor.id)">
+                        <h2>{{'sold_by' | translate}}</h2>
+                        <div class="d-flex" style="align-items: flex-start;">
+                            <div class="img_box center_img">
+                                <img [src]="vp.vendor.image" class="crop_img">
+                            </div>
+                            <div class="text_box">
+                                <h3>{{vp.vendor.name}}</h3>
+                                <p class="d-flex">
+                                    <span class="address">
+                                        <ion-icon class="zmdi zmdi-pin ion-text-center"></ion-icon>
+                                        {{vp.vendor.address}}
+                                    </span>
+                                    <span class="end">
+                                        <!-- {{'view_profile' | translate}} -->
+                                        <ion-icon class="zmdi zmdi-chevron-right ion-text-end"></ion-icon>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </ion-card-content>
+            </ion-card>
+
+            <div *ngIf="similarProducts && similarProducts.length" class="smilar_products">
+                <h1> {{'smilar_products' | translate}}</h1>
+                <div class="item_row">
+                    <ion-row>
+                        <ion-col *ngFor="let product of similarProducts" size="6">
+                            <div class="item ion-text-center">
+                                <div class="item_content" (click)="navProDetail(product)">
+                                    <div class="img_box">
+                                        <img [src]="product.images[0]">
+
+                                        <h2 *ngIf="product.stock_quantity <= 0 " class="out_of_stock"> {{"out_of_stock"
+                                            | translate}}</h2>
+
+                                    </div>
+                                    <h2>{{product.title}}</h2>
+                                    <h2 class="ion-text-center" *ngIf="product.sale_price > 0"
+                                        style="color: #cf3c4f; text-decoration: line-through; padding-right: 10px">
+                                        {{product.priceToShow}}
+                                    </h2>
+                                </div>
+
+                                <div class="item_footer d-flex">
+                                    
+                                    <h3 class="ion-text-center" *ngIf="product.sale_price === null || product.sale_price <= 0">
+                                        {{product.priceToShow}} </h3>
+                                    <h3 class="ion-text-center" *ngIf="product.sale_price > 0">{{product.sale_priceToShow}} </h3>
+            
+
+                                     <div *ngIf="product.stock_quantity > 0" class="add_item end">
+                                        <h4 class="ion-text-center" *ngIf="quantityProCart(product)==0">
+                                            <span (click)="addProCart(product)">
+                                                +
+                                            </span>
+                                        </h4>
+
+                                        <h4 class="ion-text-center" *ngIf="quantityProCart(product)!=0">
+                                            <span (click)="removeProCart(product)">
+                                                -
+                                            </span>
+
+                                            <strong class="ion-text-center">{{quantityProCart(product)}}</strong>
+
+                                            <span (click)="addProCart(product)">
+                                                +
+                                            </span>
+                                        </h4>
+                                    </div> 
+                                </div>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </div>
+        </div>
+        <!--About section end> -->
+
+
+        <!--Reviews section Start> -->
+
+        <!--
+		<div *ngSwitchCase="'reviews'">
+			<div class="empty-view" *ngIf="!isLoading && (!reviews || !reviews.length)">
+				<div style="text-align:center; margin-top: 200px;">
+					<img src="assets/images/empty_orders.png" alt="no offers" />
+					<span style="color:#9E9E9E; font-weight:bold;">
+						{{'empty_reviews' | translate}}
+					</span>
+				</div>
+			</div>
+
+			<ion-list lines="none">
+				<ion-item *ngFor="let review of reviews">
+					<div class="item_inner">
+						<div class="reviewer_details d-flex">
+							<div class="img_box center_img">
+								<img [src]="review.user.image_url" class="crop_img">
+							</div>
+							<div class="text_box">
+								<h2 class="d-flex">
+									<span class="reviewer_name">{{review.user.name}}</span>
+									<span class="end">
+										{{review.rating}}
+										&nbsp;
+										<ion-icon
+											[ngClass]="review.rating>=1 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'">
+										</ion-icon>
+										<ion-icon
+											[ngClass]="review.rating>=2 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'">
+										</ion-icon>
+										<ion-icon
+											[ngClass]="review.rating>=3 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'">
+										</ion-icon>
+										<ion-icon
+											[ngClass]="review.rating>=4 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'">
+										</ion-icon>
+										<ion-icon
+											[ngClass]="review.rating>=5 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'">
+										</ion-icon>
+									</span>
+								</h2>
+
+								<h3 class="d-flex">
+									 {{'for' | translate}}&nbsp;<strong>Cold Fever</strong> 
+									<span class="end">{{review.created_at}}</span>
+								</h3>
+							</div>
+						</div>
+						<p>{{review.review}}</p>
+					</div>
+				</ion-item>
+			</ion-list>
+			<ion-infinite-scroll (ionInfinite)="doInfiniteReviews($event)">
+				<ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{'loading' | translate}}">
+				</ion-infinite-scroll-content>
+			</ion-infinite-scroll>
+		</div>
+-->
+        <!--Reviews section end> -->
+    </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+
+    <ion-grid>
+<!--        <ion-row>-->
+<!--            <ion-col>-->
+<!--                <ion-button *ngIf="product.stock_quantity > 0" size="large" shape="full" class="btn"-->
+<!--                    (click)="addProCart(product)">-->
+<!--                    Regular Cart-->
+<!--                </ion-button>-->
+<!--            </ion-col>-->
+<!--            <ion-col>-->
+<!--                <ion-button *ngIf="product.stock_quantity > 0" disabled size="large" style="color: #ffffff;"-->
+<!--                    shape="full" class="btn">-->
+<!--                    <strong class="ion-text-center">{{quantityProCart(product)}}</strong>-->
+<!--                </ion-button>-->
+<!--            </ion-col>-->
+<!--        </ion-row>-->
+        <ion-row *ngIf="product.express==1">
+            <ion-col>
+                <ion-button *ngIf="product.stock_quantity > 0" size="large" shape="full" class="btn"
+                    (click)="addExpressProCart(product)">
+                    {{'Express Cart' | translate}}
+                </ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button *ngIf="product.stock_quantity > 0" disabled size="large" style="color: #ffffff;"
+                    shape="full" class="btn">
+                    <strong class="ion-text-center">{{quantityExpressProCart(product)}}</strong>
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <!--ion-button style="background-color: #f00;" *ngIf="product.stock_quantity <= 0" size="large" shape="full" class="btn-red">
+        {{'out_of_stock' | translate}}
+    </ion-button-->
+
+</ion-footer>
