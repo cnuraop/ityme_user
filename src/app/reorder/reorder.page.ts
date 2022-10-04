@@ -15,6 +15,7 @@ import {Helper} from 'src/models/helper.models';
 import {ApiService} from '../services/network/api.service';
 import {TitlePage} from '../title/title.page';
 import {PrescriptionPage} from '../prescription/prescription.page';
+import * as $ from 'jquery';
 
 @Component({
     selector: 'app-orders-info',

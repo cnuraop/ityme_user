@@ -12,6 +12,7 @@ import * as firebase from 'firebase/app';
 import {DatePipe} from '@angular/common'
 import {Product} from 'src/models/product.models';
 import {ECommerceService} from '../services/common/ecommerce.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
     selector: 'app-orders',
@@ -29,11 +30,14 @@ export class OrdersPage implements OnInit {
     private refresherEvent;
     private myOrdersRef: firebase.database.Reference;
     userMe: User;
+    handlerMessage = '';
+    roleMessage = '';
+
 
     constructor(private navCtrl: NavController, private translate: TranslateService,
                 private uiElementService: UiElementsService, private apiService: ApiService,
                 public eComService: ECommerceService,
-                public datepipe: DatePipe) {
+                public datepipe: DatePipe,private alertController: AlertController) {
     }
 
     ngOnInit() {
@@ -250,4 +254,63 @@ export class OrdersPage implements OnInit {
 
         }
 
-}
+        async closeOrder(order){
+
+                const alert = await this.alertController.create({
+                  header: 'Do you really want to cancel this order?',
+                  buttons: [
+                    {
+                      text: 'Cancel',
+                      role: 'cancel',
+                      handler: () => {
+                        this.handlerMessage = 'Alert canceled';
+                      },
+                    },
+                    {
+                      text: 'OK',
+                      role: 'confirm',
+                      handler: () => {
+                        this.closeButton();
+                      },
+                    },
+                  ],
+                });
+
+                await alert.present();
+            
+                const { role } = await alert.onDidDismiss();
+                this.roleMessage = `Dismissed with role: ${role}`;
+
+              }
+
+              async closeButton(){
+            
+                // this.apiService.getOneOrder(order.id).subscribe(res => {
+                //     console.log(res.data);
+                //     const navigationExtras: NavigationExtras = {state: {order: res.data[0]}};
+                //     // this.navCtrl.navigateForward(['./reorder'], navigationExtras);
+                //     var alertPopup = $ionicPopup.alert({
+                //         title: 'we would like yo access',
+                //         template: '<i class="ion-android-contacts"></i> Contact <br/> <i class="ion-android-locate"></i> Location',
+                //         okType: 'button-block button-outline button-stable',
+            
+                //     });
+                //     alertPopup.then(function(result) {
+                //         console.log(45);
+                //     });                
+    
+                // });
+    
+                    const alert = await this.alertController.create({
+                      header: 'Your Order Has Been Cancelled',
+                     // subHeader: 'Important message',
+                    // message: 'This is an alert!',
+                      buttons: ['CANCEL','OK'],
+                    });
+                
+                    await alert.present();
+                    let result = await alert.onDidDismiss();
+                    console.log(result);
+                  } 
+
+            }
